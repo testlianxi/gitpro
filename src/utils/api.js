@@ -100,7 +100,7 @@ const device = {
   removeDeviceBaseinfo:  `${HOST}/remove_device_factinfo`,
 
   // 通过设备内部id获得设备信息
-  getDeviceBaseinfoById:  `${HOST}/get_device_baseinfo_by_id`,
+  getDeviceBaseinfoById:  `${HOST}/get_device_info`,
 }
 
 // 用户管理

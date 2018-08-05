@@ -11,7 +11,7 @@ const Item = (props) => {
   const { data, match } = props;
   return (
     <li className={styles.item}>
-      <Link to={`${props.match.path}/add/${data.machine_id}`}>
+      <Link to={`${props.match.path}/add/${data.id}`}>
         <div className={styles.rightinfo}>
           <span>{data.version}<i className={styles.vifi}>wifi</i></span>
           <span className={styles.daymoney}>¥{data.sale_amount}</span>

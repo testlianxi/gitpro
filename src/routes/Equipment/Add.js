@@ -101,7 +101,7 @@ class Equipment extends Component {
 
   loadDeviceInnfo() {
     const { id } = this.state;
-    service.getDeviceBaseinfoById({id})
+    service._getDeviceBaseinfoById({id})
       .then(res => {
         const data = res.data;
         console.log(data);
