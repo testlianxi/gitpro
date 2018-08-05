@@ -48,20 +48,20 @@ class Equipment extends Component {
       id: '',
 
       // 设备型号
-      sbxh: '',
+      device_type: '',
       // 安卓型号
-      azxh: '',
+      android_type: '',
       // 主控型号
-      zkxh: '',
+      control_type: '',
       // 运营公司
-      yygs: '',
+      factory_company: '',
 
       // 设备id
-      sbid: '',
+      device_id: '',
       // 设备登陆
-      sbdl: '',
+      password: '',
       // 收款公司id
-      selectedValue: ['a'],
+      company: ['a'],
       // 收款公司列表
       selectData: [
         {
@@ -74,7 +74,7 @@ class Equipment extends Component {
         }
       ],
       // 运营人员id
-      yyryValue: ['a'],
+      operator: ['a'],
       // 运营人员列表
       yyryData: [
         {
@@ -87,15 +87,15 @@ class Equipment extends Component {
         }
       ],
       // 点位地址
-      dwdz: '',
+      address: '',
       // 设备名称
-      sbmc: '',
+      device_name: '',
       // 客服电话
-      kfdh: '',
+      service_tel: '',
       // 广告更新
       adFileName: '请选择文件',
       // 软件更新
-      softFileName: '请选择文件',
+      soft_info: '请选择文件',
     };
   }
 
@@ -105,7 +105,9 @@ class Equipment extends Component {
       .then(res => {
         const data = res.data;
         console.log(data);
+        console.log({...data.data.device_info});
         if (+data.status === 1) {
+          this.setState({...data.data.device_info})
         } else {
           console.log('获取设备信息失败');
         }
@@ -121,10 +123,10 @@ class Equipment extends Component {
   }
 
   render() {
-    const { sbxh, azxh, zkxh, yygs } = this.state;
+    const { device_type, android_type, control_type, factory_company } = this.state;
     const { 
-      sbid, sbdl, selectData, selectedValue, dwdz, sbmc, kfdh,
-      yyryValue, yyryData, adFileName, softFileName
+      device_id, password, selectData, company, address, device_name, service_tel,
+      operator, yyryData, adFileName, soft_info
     } = this.state;
     const { history } = this.props
     return (
@@ -141,34 +143,34 @@ class Equipment extends Component {
           <div className={styles.tabitem}>
             <List>
               <InputItem
-                value={sbxh}
+                value={device_type}
                 clear
                 placeholder="请输入设备型号"
-                onChange={sbxh => {this.setState({sbxh})}}
+                onChange={device_type => {this.setState({device_type})}}
               >设备型号</InputItem>
             </List>
             <List>
               <InputItem
-                value={azxh}
+                value={android_type}
                 clear
                 placeholder="请输入安卓型号"
-                onChange={azxh => {this.setState({azxh})}}
+                onChange={android_type => {this.setState({android_type})}}
               >安卓型号</InputItem>
             </List>
             <List>
               <InputItem
-                value={zkxh}
+                value={control_type}
                 clear
                 placeholder="请输入主控型号"
-                onChange={zkxh => {this.setState({zkxh})}}
+                onChange={control_type => {this.setState({control_type})}}
               >主控型号</InputItem>
             </List>
             <List>
               <InputItem
-                value={yygs}
+                value={factory_company}
                 clear
                 placeholder="请输入运营公司"
-                onChange={yygs => {this.setState({yygs})}}
+                onChange={factory_company => {this.setState({factory_company})}}
               >运营公司</InputItem>
             </List>
           </div>
@@ -176,19 +178,19 @@ class Equipment extends Component {
           <div className={styles.tabitem}>
             <List>
               <InputItem
-                value={sbid}
+                value={device_id}
                 clear
                 placeholder="安卓的芯片地址（手动填写）"
-                onChange={sbid => {this.setState({sbid})}}
+                onChange={device_id => {this.setState({device_id})}}
               >设备ID</InputItem>
             </List>
 
             <List>
               <InputItem
-                value={sbdl}
+                value={password}
                 clear
                 placeholder="设备登录使用的手机号码（手动填写）"
-                onChange={sbdl => {this.setState({sbdl})}}
+                onChange={password => {this.setState({password})}}
               >设备登录</InputItem>
             </List>
 
@@ -199,9 +201,9 @@ class Equipment extends Component {
                 <Picker
                   data={selectData}
                   cols="1"
-                  value={selectedValue}
+                  value={company}
                   cascade
-                  onOk={v => {this.setState({selectedValue: v})}}
+                  onOk={v => {this.setState({company: v})}}
                 >
                   <List.Item onClick={() => {}}></List.Item>
                 </Picker>
@@ -210,28 +212,28 @@ class Equipment extends Component {
 
             <List>
               <InputItem
-                value={dwdz}
+                value={address}
                 clear
                 placeholder="请输入"
-                onChange={dwdz => {this.setState({dwdz})}}
+                onChange={address => {this.setState({address})}}
               >点位地址</InputItem> 
             </List>
 
             <List>
               <InputItem
-                value={sbmc}
+                value={device_name}
                 clear
                 placeholder="请输入"
-                onChange={sbmc => {this.setState({sbmc})}}
+                onChange={device_name => {this.setState({device_name})}}
               >设备名称</InputItem>
             </List>
 
             <List>
               <InputItem
-                value={kfdh}
+                value={service_tel}
                 clear
                 placeholder="请输入"
-                onChange={kfdh => {this.setState({kfdh})}}
+                onChange={service_tel => {this.setState({service_tel})}}
               >客服电话</InputItem>
             </List>
 
@@ -243,9 +245,9 @@ class Equipment extends Component {
                     className={styles.fileup}
                     ref={el => (this.softEl = el)}
                     type="file"
-                    onChange={e => {this.setState({softFileName: e.target.files[0].name})}}
+                    onChange={e => {this.setState({soft_info: e.target.files[0].name})}}
                   />
-                  <div className={softFileName === '请选择文件' ? styles.selectfile : null}>{softFileName}</div>
+                  <div className={soft_info === '请选择文件' ? styles.selectfile : null}>{soft_info}</div>
                 </label>
               </div>
             </div>
@@ -273,9 +275,9 @@ class Equipment extends Component {
                 <Picker
                   data={yyryData}
                   cols="1"
-                  value={yyryValue}
+                  value={operator}
                   cascade
-                  onOk={v => {this.setState({yyryValue: v})}}
+                  onOk={operator => {this.setState({operator})}}
                 >
                   <List.Item onClick={() => {}}></List.Item>
                 </Picker>
