@@ -1,0 +1,23 @@
+.title {
+	position: relative;
+	height: 45px;
+	line-height: 45px;
+	padding: 0 70px;
+	font-size: 15px;
+	background-color: #108ee9;
+	color: #fff;
+	text-align: center;
+}
+.menu, .return {
+	position: absolute;
+	top: 0;
+	padding: 0 10px;
+	height: 45px;
+	cursor: pointer;
+}
+.menu {
+	right: 10px;
+}
+.return {
+	left: 10px;
+}

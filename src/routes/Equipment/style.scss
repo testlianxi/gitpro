@@ -1,0 +1,258 @@
+.equipment, .equadd {
+  color: #666;
+  font-size: 14px;
+  background: #fff;
+  padding-bottom: 50px;
+}
+.tabswitch {
+	padding: 0 18px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid #d7d7d7;
+	a {
+		float: left;
+		width: 30%;
+		height: 28px;
+		line-height: 28px;
+    border-radius: 4px;
+    text-align: center;
+    color: #108ee9;
+    border: 1px solid #108ee9;
+    transition: all .5s;
+	}
+	a:last-child {
+		display: block;
+		float: none;
+		margin: 0 auto;
+	}
+	a:nth-child(2) {
+		float: right;
+	}
+	.active {
+		color: #fff;
+		background: #108ee9;
+	}
+}
+.fninfo {
+	padding-bottom: 50px;
+	ul {
+		padding: 5px 10px;
+		border-bottom: 1px solid #d7d7d7;
+	}
+	.item {
+		position: relative;
+		margin-bottom: 2px;
+		padding: 15px;
+		padding-right: 30px;
+		border-bottom: 1px solid #d7d7d7;
+		font-size: 12px;
+		line-height: 1;
+		&:last-child {
+			border: none;
+		}
+		&:after {
+			content: "";
+	    position: absolute;
+	    right: 8px;
+	    top: 45%;
+	    width: 14px;
+	    height: 14px;
+	    border-top: 1px solid #ccc;
+	    border-left: 1px solid #ccc;
+	    transform: rotate(135deg)
+		}
+	}
+	.deviceindex {
+		margin-bottom: 10px;
+		color: #108ee9;
+		font-size: 14px;
+	}
+	.devicename {
+		margin-bottom: 5px;
+	}
+	.rightinfo {
+		float: right;
+		.vifi {
+			font-style: normal;
+			margin-left: 5px;
+		}
+	}
+	.daymoney {
+		display: block;
+		margin-top: 5px;
+		text-align: right;
+		color: #333;
+		font-size: 14px;
+	}
+	.taglack, .tagerr {
+		margin-left: 10px;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 2px 10px;
+	}
+	.taglack {
+		background-color: #f76a24;
+	}
+	.tagerr {
+		background-color: #e94f4f;
+	}
+}
+
+.equadd {
+	[role="tab"]{
+		cursor: pointer;
+	}
+	.tabitem {
+		padding: 20px;
+		min-height: 300px;
+		div, input {
+			font-size: 14px!important;
+		}
+	}
+	[class="am-list-body"] {
+		border-top: 0;
+		&:before {
+			height: 0!important;
+		}
+		&:after {
+			background-color: #d7d7d7!important;
+		}
+	}
+	.skgs {
+		height: 45px;
+		padding-left: 15px;
+		border-bottom: 1px solid #ddd;
+		position: relative;
+		&:after {
+			content: "";
+	    position: absolute;
+	    right: 18px;
+	    top: 14px;
+	    width: 10px;
+	    height: 10px;
+	    border-top: 1px solid #888;
+	    border-left: 1px solid #888;
+	    transform: rotate(-135deg);
+	    cursor: pointer;
+		}
+		> .label {
+			float: left;
+			width: 85px;
+			margin-top: 15px;
+			font-size: 14px;
+			color: #000;
+		}
+		.datasecect {
+			float: left;
+			width: calc(100% - 100px);
+			margin-top: 8px;
+			padding-left: 5px;
+			.fileup {
+				float: left;
+				width: 0;
+			}
+			.selectfile { color: #bbb!important; }
+			div {
+				display: block!important;
+				padding: 0!important;
+				height: 30px!important;
+				line-height: 30px!important;
+				font-size: 14px!important;
+				text-align: left!important;
+				min-height: 28px;
+				cursor: pointer;
+				color: #000!important;
+			}
+		}
+	}
+	.tools {
+		height: 45px;
+		margin-bottom: 15px;
+	  border-bottom: 1px solid #d7d7d7;
+		a {
+			float: left;
+	    width: 30%;
+	    height: 28px;
+	    line-height: 28px;
+	    border-radius: 4px;
+	    text-align: center;
+	    color: #108ee9;
+	    border: 1px solid #108ee9;
+		}
+		a:last-child {
+			float: right;
+		}
+	}
+	.goods {
+		padding: 15px 0px;
+		border-bottom: 1px solid #d7d7d7;
+		&:last-child {
+			border: none;
+		}
+		.goodsinfo {
+			height: 50px;
+			margin-bottom: 15px;
+			span {
+				float: left;
+				width: 22%;
+				height: 50px;
+				box-sizing: border-box;
+				padding: 5px 0px;
+				margin-right:4%;
+				line-height: 18px;
+				text-align: center;
+				color: #108ee9;
+				border: 1px solid #108ee9;
+				border-radius: 4px;
+				input {
+					width: 50px;
+					margin: 0 auto;
+					border: 1px solid #d7d7d7;
+					border-radius: 2px;
+					text-align: center;
+				}
+				&:last-child {
+					margin-right: 0;
+					cursor: pointer;
+					line-height: 40px;
+					color: #fff;
+					background: #108ee9;
+					border: 1px solid #108ee9;
+				}
+			}
+		}
+		.goodstatus {
+			span {
+				float: right;
+		    margin-right: 10px;
+		    padding: 5px 14px;
+		    color: #fff;
+		    border-radius: 3px;
+		    font-size: 12px;
+		    background-color: #e94f4f;
+		    margin-top: 3px;
+			}
+			a {
+				display: block;
+				height: 28px;
+				width: 70px;
+				margin-top: -5px;
+		    line-height: 28px;
+		    border-radius: 4px;
+		    text-align: center;
+		    color: #fff;
+		    background: #108ee9;
+		    font-size: 12px;
+		    border: 1px solid #108ee9;
+			}
+		}
+	}
+}
+:global {
+	.am-picker-popup-mask, .am-picker-popup-wrap  {
+		left: 50%;
+    max-width: 750px;
+    width: 100%;
+    transform: translateX(-50%);
+	}
+}

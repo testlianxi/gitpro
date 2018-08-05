@@ -1,0 +1,127 @@
+.salecount {
+	background: #fff;
+	color: #666;
+	font-size: 14px;
+	padding-bottom: 50px;
+}
+.search {
+	padding: 20px;
+	border-bottom: 1px solid #d7d7d7;
+	> div {
+		height: 30px;
+		line-height: 30px;
+		margin-bottom: 15px;
+		> span {
+			float: left;
+		}
+	}
+	.datasecect {
+		float: left;
+		border: 1px solid #d7d7d7;
+		border-radius: 6px;
+		padding: 0 15px;
+		min-width: 100px;
+		overflow: hidden;
+		div {
+			display: block!important;
+			padding: 0!important;
+			height: 30px!important;
+			line-height: 30px!important;
+			font-size: 14px!important;
+			text-align: center!important;
+			min-height: 28px;
+			cursor: pointer;
+		}
+	}
+	.concat {
+		float: left;
+		padding: 0 10px;
+	}
+	.selected i {
+		font-style: normal;
+		font-size: 13px;
+		padding: 4px 6px;
+    border-radius: 3px;
+    background-color: #f4f4f4;
+    border: 1px solid #dadada;
+    margin-right: 10px;
+	}
+	.seacrchbtn {
+		display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    text-align: center;
+    outline: 0;
+    margin: 0;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #108ee9;
+    border: 1px solid #108ee9;
+    padding: 8px 30px;
+    color: #fff;
+	}
+}
+.sum {
+	padding: 20px 15px;
+	text-align: center;
+	position: relative;
+	a {
+		position: absolute;
+		right: 20px;
+		top: 25px;
+		line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    text-align: center;
+    outline: 0;
+    margin: 0;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #108ee9;
+    border: 1px solid #108ee9;
+    padding: 8px 10px;
+    color: #fff;
+	}
+	strong {
+    color: #0f990f;
+    font-size: 18px;
+    font-weight: 500;
+	}
+	span {
+		display: inline-block;
+		padding: 10px 0px;
+	}
+}
+.tableitem {
+	padding: 20px;
+	// border-bottom: 1px solid #d7d7d7;
+	font-size: 13px;
+}
+
+
+
+:global {
+	.am-picker-popup-mask, .am-picker-popup-wrap  {
+		left: 50%;
+    max-width: 750px;
+    width: 100%;
+    transform: translateX(-50%);
+	}
+	.am-picker-popup-header-right, .am-picker-popup-header-left {
+		cursor: pointer;
+	}
+	table {
+		width: 100%;
+		border-collapse:collapse;
+		td, th {
+			border: 1px solid #efefef;
+			padding: 10px;
+			text-align: center;
+		}
+	}
+}

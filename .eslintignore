@@ -1,0 +1,4 @@
+# or config to `package.json` "eslintIgnore": ["/node_modules/*", "dist/*"]
+
+node_modules
+dist/*

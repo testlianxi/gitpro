@@ -1,0 +1,23 @@
+.search {
+	padding: 20px 0;
+	// border-bottom: 1px solid #d7d7d7;
+	form {
+		padding: 0 18px;
+		background: #fff;
+		> div:first-child {
+			height: 35px;
+    	line-height: 35px;
+			border: 1px solid #dfdfdf;
+    	div, input {
+    		height: 35px;
+   		  line-height: 35px;
+    	}
+ 		  a {
+ 		  	top: 3px;
+ 		  }
+		}
+		> div:last-child {
+			padding-left: 15px;
+		}
+	}
+}

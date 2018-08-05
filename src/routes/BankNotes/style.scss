@@ -1,0 +1,69 @@
+.record{
+	padding-bottom: 50px;
+	background: #fff;
+}
+
+.tabswitch {
+	padding: 0 18px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid #d7d7d7;
+  overflow: hidden;
+	a {
+		float: left;
+		width: 30%;
+		height: 28px;
+		line-height: 28px;
+    border-radius: 4px;
+    text-align: center;
+    color: #108ee9;
+    border: 1px solid #108ee9;
+    transition: all .5s;
+	}
+	a:last-child {
+		float: right;
+	}
+	.active {
+		color: #fff;
+		background: #108ee9;
+	}
+}
+
+.recorditem {
+	margin-bottom: 2px;
+  padding: 15px;
+  border-bottom: 1px solid #d7d7d7;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+  .name {
+  	margin-bottom: 5px;
+  	color: #333;
+  	font-size: 15px;
+  	line-height: 1;
+  	span {
+  		float: right;
+  	}
+  }
+  .time a {
+  	position: relative;
+  	top: -6px;
+  	float: right;
+    width: 80px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .success {
+    border: 1px solid #108ee9;
+    color: #108ee9;
+  }
+  .waring {
+    border: 1px solid #f76a24;
+    color: #f76a24;
+  }
+  .error {
+    border: 1px solid #e94f4f;
+    color: #e94f4f;
+  }
+}

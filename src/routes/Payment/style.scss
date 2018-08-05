@@ -1,0 +1,50 @@
+.paymentList {
+    > a {
+      background: #fff;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      display: flex;
+      font-size: 14px;
+      border-top: 1px solid #e7e7e7;
+      border-bottom: 1px solid #e7e7e7;
+      > span {
+        flex: 1;
+        line-height: 20px;
+      }
+
+      > i {
+        font-size: 18px;
+        width: 40px;
+      }
+    }
+}
+
+.fenge {
+  margin: 20px 0;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1)
+}
+
+.second {
+
+}
+
+.erweima {
+  display: flex;
+  > img {
+    height: 150px;
+    width: 150px;
+    margin: 15px;
+  }
+
+  > a {
+    flex: 1;
+    height: 50px;
+    background: #108ee9;
+    line-height: 50px;
+    text-align: center;
+    margin-top: 50px;
+    margin-right: 20px;
+    color: #fff;
+    border-radius: 4px;
+  }
+}
