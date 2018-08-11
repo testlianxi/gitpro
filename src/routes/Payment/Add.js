@@ -5,6 +5,20 @@ import { NavBar, Icon, List, Accordion, InputItem, TextareaItem, WingBlank, Butt
 import er from './er.png'
 
 class Payment extends Component {
+  state = {
+    w: {
+      AppId: '', // appid
+      shopId: '', // 商铺ID
+      api: '', // API密钥
+      crt: null, // 证书
+    }，
+    z: {
+      AppId: '', // APPID
+      pid: '', // PID
+      key: '', // 支付宝公钥
+      sKey: '', // 用户私钥
+    }
+  }
 
   save =()=>{
     const { history } = this.props;
