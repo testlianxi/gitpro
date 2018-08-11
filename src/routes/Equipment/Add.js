@@ -3,38 +3,49 @@ import { connect } from 'dva';
 import styles from './style.scss';
 import Title from '_c/topbar';
 import service from '_s/device';
-import { NavBar, Icon, Tabs, InputItem, List, Picker } from 'antd-mobile';
+import { NavBar, Icon, Tabs, InputItem, List, Picker, Toast } from 'antd-mobile';
+import { _getPayList } from '_s/pay';
+import {
+  _createDevice, _createItemAisleinfo,
+  _editDevice, _addaislelist
+} from '_s/device';
+import { _getGoodList } from '_s/good';
+import Shoping from '_c/Shoping';
 const tabs = [
   { title: '出厂信息' },
   { title: '基本信息'},
   { title: '货道信息' },
 ];
-
+// <span>
+//   推货
+//   <br />
+//   <input type="number" placeholder="请输入" />
+// </span>
 const GoodsItem = (props) => {
+  const {
+    index,
+    data, changeInput,
+    upDate, addGoods
+  } = props;
   return (
     <li className={styles.goods}>
       <div className={styles.goodsinfo}>
         <span>
           价格
           <br />
-          100
+          <input type="number" onChange={e => {changeInput(index, 'price', e.target.value)}} value={data.price} placeholder="请输入" />
         </span>
         <span>
           库存
           <br />
-          100
+          <input type="number" onChange={e => {changeInput(index, 'inventory', e.target.value)}} value={data.inventory} placeholder="请输入" />
         </span>
-        <span>
-          推货
-          <br />
-          <input type="number" placeholder="请输入" />
-        </span>
-        <span>点击更新</span>
+        <span onClick={() => upDate(index)}>点击更新</span>
       </div>
       <div className={styles.goodstatus}>
         <span>缺货</span>
         <span>卡货</span>
-        <a href="javascript:;">添加商品</a>
+        <a href="javascript:;" onClick={() => addGoods(index)}>添加商品</a>
       </div>
     </li>
   );
@@ -44,6 +55,13 @@ class Equipment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // 商品列表
+      goodList: null,
+      showGoods: false,
+      // 当前操作货道的序号
+      currentIndex: '',
+      // 回传的货道列表
+      aisle_info_list: [],
       // 机器id
       id: '',
 
@@ -54,38 +72,18 @@ class Equipment extends Component {
       // 主控型号
       control_type: '',
       // 运营公司
-      factory_company: '',
+      operator_company: '',
 
       // 设备id
       device_id: '',
       // 设备登陆
       password: '',
       // 收款公司id
-      company: ['a'],
+      company_id: [],
       // 收款公司列表
-      selectData: [
-        {
-          value: 'a',
-          label: '大风'
-        },
-        {
-          value: 'b',
-          label: '法国人'
-        }
-      ],
+      payList: null,
       // 运营人员id
-      operator: ['a'],
-      // 运营人员列表
-      yyryData: [
-        {
-          value: 'a',
-          label: '别表1'
-        },
-        {
-          value: 'b',
-          label: '别表2'
-        }
-      ],
+      operator: [],
       // 点位地址
       address: '',
       // 设备名称
@@ -93,7 +91,7 @@ class Equipment extends Component {
       // 客服电话
       service_tel: '',
       // 广告更新
-      adFileName: '请选择文件',
+      adv_info: '请选择文件',
       // 软件更新
       soft_info: '请选择文件',
     };
@@ -104,29 +102,185 @@ class Equipment extends Component {
     service._getDeviceBaseinfoById({id})
       .then(res => {
         const data = res.data;
-        console.log(data);
-        console.log({...data.data.device_info});
+        const { device_info, aisle_info_list } = data.data;
         if (+data.status === 1) {
-          this.setState({...data.data.device_info})
+          this.setState({
+            ...device_info,
+            ...aisle_info_list,
+            company_id: device_info.company_id ? [device_info.company_id] : []
+          });
         } else {
           console.log('获取设备信息失败');
         }
       });
   }
 
+  loadGoodList() {
+
+    _getGoodList({
+      size: 50,
+      offset: 0,
+      search: '',
+    })
+    .then(res => {
+      console.log(res);
+      this.setState({
+        goodList: res,
+      })
+    });
+  }
+
+  loadCompany = () => {
+    _getPayList({
+      size: 50,
+      offset: 0,
+      search: '',
+    })
+    .then(payList => {
+      this.setState({
+        payList: payList.map(item => ({value: item.id, label: item.name})),
+      })
+    });
+  }
+
+  createDeviceInfo(type) {
+    const {
+      id,
+      device_type,
+      android_type,
+      control_type,
+      operator_company,
+      device_id,
+      password,
+      company_id,
+      address,
+      device_name,
+      service_tel,
+      soft_info,
+      adv_info,
+    } = this.state;
+
+    const send = type === 'upDate' ? _editDevice : _createDevice;
+    send({
+      id,
+      device_type,
+      android_type,
+      control_type,
+      operator_company,
+      device_id,
+      password,
+      company_id: company_id[0],
+      address,
+      device_name,
+      service_tel,
+      soft_info,
+      adv_info,
+    })
+      .then(res => {
+        if (res.data.status === '1') {
+          this.props.history.goBack();
+        } else {
+          alert('保存失败');
+        }
+      })
+      .catch(res => {
+        alert('操作失败');
+      })
+  }
+
+  addAisle = () => {
+    const { aisle_info_list, id } = this.state;
+    aisle_info_list.push({
+      id: id,
+      goods_id: '',
+      price: '',
+      inventory: '',
+      aisle_id: aisle_info_list.length + 1
+    });
+    this.setState({aisle_info_list});
+  }
+
+  upDateAll = () => {
+    const { aisle_info_list } = this.state;
+    _addaislelist({data: JSON.stringify(aisle_info_list)})
+      .then(res => {
+        if (res.data.status === '1') {
+           Toast.fail('保存成功', 1);
+        } else {
+          alert('保存失败');
+        }
+      })
+      .catch(res => {
+        alert('操作失败');
+      })
+  }
+
+  changeDeviceInfo() {
+    const { aisle_info_list } = this.state;
+    this.createDeviceInfo('upDate');
+
+    if (!aisle_info_list.length) return;
+    var isEmpty = aisle_info_list.find(item => item.goods_id === '');
+    if (isEmpty) return alert('请给货道添加商品');
+    this.upDateAll();
+  }
+
+  savaData = () => {
+    const { match } = this.props;
+    const id = match.params.id;
+    if (id === '-1') this.createDeviceInfo();
+    else this.changeDeviceInfo();
+  }
+
+  changeInput = (index, type, value) => {
+    const { aisle_info_list } = this.state;
+    aisle_info_list[index][type] = value;
+    this.setState({aisle_info_list});
+  }
+
+  upDate = (index) => {
+    const { aisle_info_list } = this.state;
+    const item = aisle_info_list[index];
+    if (!item.goods_id) return Toast.fail('请添加一个商品', 1);
+    _createItemAisleinfo({...item})
+      .then(res => {
+        if (res.data.status === '1') {
+          Toast.success('更新成功', 1);
+        } else {
+          alert('操作失败');
+        }
+      })
+      .catch(res => {
+        alert('操作失败');
+      })
+  }
+
+  addGoods = (currentIndex) => {
+    this.setState({currentIndex, showGoods: true});
+  }
+
+  setGoodsId = (id) => {
+    const { aisle_info_list, currentIndex } = this.state;
+    aisle_info_list[currentIndex].goods_id = id;
+    this.setState({aisle_info_list, showGoods: false});
+  }
+
   componentWillMount() {
     const { match } = this.props;
     const id = match.params.id;
+    this.loadCompany();
+    this.loadGoodList();
     this.setState({id}, () => {
       if (id !== '-1') this.loadDeviceInnfo();
     });
   }
 
   render() {
-    const { device_type, android_type, control_type, factory_company } = this.state;
+    const { device_type, android_type, control_type, operator_company, device_id } = this.state;
     const { 
-      device_id, password, selectData, company, address, device_name, service_tel,
-      operator, yyryData, adFileName, soft_info
+      id, password, payList, company_id, address, device_name, service_tel,
+      operator, yyryData, adv_info, soft_info,
+      goodList, showGoods, aisle_info_list,
     } = this.state;
     const { history } = this.props
     return (
@@ -136,9 +290,9 @@ class Equipment extends Component {
           centerContent="添加设备"
           rightContent="保存"
           leftClick={() => {history.goBack()}}
-          rightClick={alert}
+          rightClick={this.savaData}
         />
-        <Tabs tabs={tabs}>
+        <Tabs tabs={id === '-1' ? tabs.slice(0, 2) : tabs}>
 
           <div className={styles.tabitem}>
             <List>
@@ -167,10 +321,10 @@ class Equipment extends Component {
             </List>
             <List>
               <InputItem
-                value={factory_company}
+                value={operator_company}
                 clear
                 placeholder="请输入运营公司"
-                onChange={factory_company => {this.setState({factory_company})}}
+                onChange={operator_company => {this.setState({operator_company})}}
               >运营公司</InputItem>
             </List>
           </div>
@@ -199,11 +353,11 @@ class Equipment extends Component {
               <div className={styles.label}>收款公司</div>
               <div className={styles.datasecect}>
                 <Picker
-                  data={selectData}
+                  data={payList}
                   cols="1"
-                  value={company}
+                  value={company_id}
                   cascade
-                  onOk={v => {this.setState({company: v})}}
+                  onOk={v => {this.setState({company_id: v})}}
                 >
                   <List.Item onClick={() => {}}></List.Item>
                 </Picker>
@@ -261,43 +415,70 @@ class Equipment extends Component {
                     className={styles.fileup}
                     ref={el => (this.adEl = el)}
                     type="file"
-                    onChange={e => {this.setState({adFileName: e.target.files[0].name})}}
+                    onChange={e => {this.setState({adv_info: e.target.files[0].name})}}
                   />
-                  <div className={adFileName === '请选择文件' ? styles.selectfile : null}>{adFileName}</div>
+                  <div className={adv_info === '请选择文件' ? styles.selectfile : null}>{adv_info}</div>
                 </label>
               </div>
             </div>
 
 
-            <div className={styles.skgs}>
+            <div className={styles.skgs + ' ' + styles.taglist}>
               <div className={styles.label}>运营人员</div>
               <div className={styles.datasecect}>
-                <Picker
-                  data={yyryData}
-                  cols="1"
-                  value={operator}
-                  cascade
-                  onOk={operator => {this.setState({operator})}}
-                >
-                  <List.Item onClick={() => {}}></List.Item>
-                </Picker>
+                {
+                  operator
+                  &&
+                  operator.length
+                  ?
+                  operator.map(item => (<span>{item}</span>)) : null
+                }
               </div>
             </div>
 
           </div>
-
-          <div className={styles.tabitem}>
-            <div className={styles.tools}>
-              <a href="javascript:;">新增货道</a>
-              <a href="javascript:;">一键更新</a>
-            </div>
-            <ul>
-              <GoodsItem />
-              <GoodsItem />
-              <GoodsItem />
-            </ul>
-          </div>
+          {
+            id !== '-1'
+            &&
+            (<div className={styles.tabitem}>
+              <div className={styles.tools}>
+                <a href="javascript:;" onClick={this.addAisle}>新增货道</a>
+                <a href="javascript:;" onClick={this.upDateAll}>一键更新</a>
+              </div>
+              <ul>
+                {
+                  aisle_info_list && aisle_info_list.length ?
+                  aisle_info_list.map((item, index) => (
+                    <GoodsItem
+                      index={index}
+                      key={item.aisle_id}
+                      data={item}
+                      changeInput={this.changeInput}
+                      upDate={this.upDate}
+                      addGoods={this.addGoods}
+                    />)
+                  ) : null
+                }
+              </ul>
+            </div>)
+          }
         </Tabs>
+        {
+          <ul style={{display: showGoods ? 'block' : 'none'}} className={styles.selectGoods}>
+            <li className={styles.goodstitle}>请选择要添加的商品</li>
+            {
+              goodList
+              &&
+              goodList.map((item,i)=>{
+                return (
+                  <Shoping money={item.price} name={item.name} url={item.image_url} key={i}>
+                    <a href="javascript:;" onClick={() => this.setGoodsId(item.id)}>选择</a>
+                  </Shoping>
+                )
+              })
+            }
+          </ul>
+        }
       </div>
     );
   }

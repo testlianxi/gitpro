@@ -17,7 +17,7 @@ const Item = (props) => {
           <span className={styles.daymoney}>¥{data.sale_amount}</span>
         </div>
         <div className={styles.deviceindex}>
-          NO:{data.machine_id}
+          NO:{data.id}
           {+data.goods_status === 1 && (<span className={styles.taglack}>缺货</span>)}
           {+data.sign_status === 1 && (<span className={styles.tagerr}>故障</span>)}
         </div>
@@ -71,7 +71,7 @@ class Equipment extends Component {
 
     getCompanyDeviceList({
       size,
-      offset: offset - 1,
+      offset: (offset - 1) * size,
       search,
       type,
     })
@@ -133,8 +133,8 @@ class Equipment extends Component {
               companyDeviceList
               &&
               companyDeviceList.length
-              &&
-              companyDeviceList.map(item => (<Item key={item.machine_id} match={match} data={item} />))
+              ?
+              companyDeviceList.map(item => (<Item key={item.id} match={match} data={item} />)) : null
             }
           </ul>
           {

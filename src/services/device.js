@@ -11,6 +11,8 @@ const {
   editDeviceBaseinfo,
   removeDeviceBaseinfo,
   getDeviceBaseinfoById,
+  createItemAisleinfo,
+  addaislelist,
 } = device;
 
 // 获取设备列表
@@ -29,7 +31,7 @@ const _editDevice= (params) =>{
     method: "GET",
     body: params
   }).then(res =>{
-    console.log(res);
+    return (res);
   })
 }
 
@@ -39,7 +41,7 @@ const _createDevice = (params) =>{
     method: "GET",
     body: params
   }).then(res =>{
-    console.log(res);
+    return (res);
   })
 }
 
@@ -50,6 +52,15 @@ const _createAisleinfo = (params) =>{
     body: params
   }).then(res =>{
     console.log(res);
+  })
+}
+// 添加单个货道
+const _createItemAisleinfo = (params) =>{
+  return request(createItemAisleinfo,{
+    method: "GET",
+    body: params
+  }).then(res =>{
+    return (res);
   })
 }
 
@@ -72,6 +83,17 @@ const _createDeviceBaseinfo = (params) =>{
     console.log(res);
   })
 }
+
+// 添加批量货道
+const _addaislelist = (params) =>{
+  return request(addaislelist,{
+    method: "GET",
+    body: params
+  }).then(res =>{
+    return (res);
+  })
+}
+
 // 修改设备出厂信息
 const _editDeviceBaseinfo = (params) =>{
   return request(editDeviceBaseinfo,{
@@ -108,4 +130,6 @@ export default {
    _editDeviceBaseinfo,
    _removeDeviceBaseinfo,
    _getDeviceBaseinfoById,
+   _createItemAisleinfo,
+   _addaislelist,
 };

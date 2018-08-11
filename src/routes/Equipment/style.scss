@@ -212,6 +212,7 @@
 					text-align: center;
 				}
 				&:last-child {
+					float: right;
 					margin-right: 0;
 					cursor: pointer;
 					line-height: 40px;
@@ -246,6 +247,53 @@
 		    border: 1px solid #108ee9;
 			}
 		}
+	}
+	.taglist {
+		height: auto;
+		overflow: hidden;
+		min-height: 45px;
+		&:after {
+			border: none;
+		}
+		.datasecect {
+			margin-top: 11px;
+		}
+		span {
+			display: inline-block;
+			padding: 4px 5px;
+			margin-right: 10px;
+			margin-bottom: 8px;
+			border-radius: 2px;
+			color: #999;
+			border: 1px solid #d8d8d8;
+			background: #f4f4f4;
+			font-size: 12px;
+		}
+	}
+}
+.selectGoods {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	background: #fff;
+	z-index: 999;
+	overflow-y: auto;
+	padding-top: 45px;
+	.goodstitle {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background: #fff;
+		line-height: 45px;
+		text-align: center;
+		font-size: 16px;
+		color: #333;
+		z-index: 12;
+		border-bottom: 1px solid #d7d7d7;
 	}
 }
 :global {
