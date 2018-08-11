@@ -11,7 +11,7 @@ class Payment extends Component {
       shopId: '', // 商铺ID
       api: '', // API密钥
       crt: null, // 证书
-    }，
+    },
     z: {
       AppId: '', // APPID
       pid: '', // PID
