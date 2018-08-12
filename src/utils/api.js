@@ -82,13 +82,19 @@ const device = {
   list :  `${HOST}/device_list`,
 
   // 编辑基本信息
-  edit :  `${HOST}/_edit_device_baseinfo`,
+  edit :  `${HOST}/edit_device_info`,
 
   // 创建基本信息
-  create :  `${HOST}/create_device_baseinfo`,
+  create :  `${HOST}/create_device_info`,
+
+  // 添加批量货道
+  addaislelist :  `${HOST}/create_device_aisleinfo_batch`,
 
   // 添加货道信息
   createAisleinfo :  `${HOST}/create_device_baseinfo`,
+
+  // 添加单个货道信息
+  createItemAisleinfo :  `${HOST}/create_device_aisleinfo`,
 
   // 删除货道信息
   removeAisleinfo :  `${HOST}/remove_device_aisleinfo`,
