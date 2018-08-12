@@ -103,10 +103,11 @@ class Equipment extends Component {
       .then(res => {
         const data = res.data;
         const { device_info, aisle_info_list } = data.data;
+        console.log(aisle_info_list);
         if (+data.status === 1) {
           this.setState({
             ...device_info,
-            ...aisle_info_list,
+            aisle_info_list,
             company_id: device_info.company_id ? [device_info.company_id] : []
           });
         } else {
@@ -123,9 +124,8 @@ class Equipment extends Component {
       search: '',
     })
     .then(res => {
-      console.log(res);
       this.setState({
-        goodList: res,
+        goodList: res.result,
       })
     });
   }
@@ -138,7 +138,7 @@ class Equipment extends Component {
     })
     .then(payList => {
       this.setState({
-        payList: payList.map(item => ({value: item.id, label: item.name})),
+        payList: payList.result.map(item => ({value: item.id, label: item.name})),
       })
     });
   }

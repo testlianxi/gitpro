@@ -12,8 +12,8 @@ export default {
   },
 
   effects: {
-    * login({ payload }, {call, put}) {
-      const userInfo = yield call(service.userLogin, {uid: 'autobox',password:'autobox@123!abc'});
+    * login({ uid, password }, {call, put}) {
+      const userInfo = yield call(service.userLogin, {uid, password});
       return userInfo;
     },
 

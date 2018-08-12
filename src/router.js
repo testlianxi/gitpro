@@ -5,6 +5,7 @@ import Shell from './routes/Shell';
 
   // 首页
 import Index from './routes/Index';
+import Login from './routes/Login';
 // 商品
 import Commodity from './routes/Commodity';
 import CommodityAdd from './routes/Commodity/Add';
@@ -40,6 +41,7 @@ function RouterConfig({ history, app }) {
     <Switch>
       <Shell>
         <Route path="/" exact component={Index} />
+        <Route path="/login" exact component={Login} />
         <Route path="/Commodity" exact component={Commodity} />
         <Route path="/Commodity/Add/:id" exact component={CommodityAdd} />
         <Route path="/Equipment" exact component={Equipment} />
