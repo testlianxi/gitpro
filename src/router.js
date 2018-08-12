@@ -16,6 +16,10 @@ import EquipmentAdd from './routes/Equipment/Add';
 import Payment from './routes/Payment';
 import PaymentAdd from './routes/Payment/Add';
 
+// 软件
+import Software from './routes/Software';
+import SoftwareAdd from './routes/Software/Add';
+
 // 人员
 import Personnel from './routes/Personnel';
 import PersonnelAdd from './routes/Personnel/Add';
@@ -42,6 +46,8 @@ function RouterConfig({ history, app }) {
         <Route path="/Equipment/Add/:id" exact component={EquipmentAdd} />
         <Route path="/Payment" exact component={Payment} />
         <Route path="/Payment/Add/:id" exact component={PaymentAdd} />
+        <Route path="/Software" exact component={Software} />
+        <Route path="/Software/Add/:id" exact component={SoftwareAdd} />        
         <Route path="/Personnel" exact component={Personnel} />
         <Route path="/Personnel/Add/:id" exact component={PersonnelAdd} />
         <Route path="/Personnel/AddEquipment/:id" exact component={AddEquipment} />

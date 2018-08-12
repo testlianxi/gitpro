@@ -13,10 +13,12 @@ class Payment extends Component {
     wx_mchid: '', // 微信商铺ID
     wx_apikey: '', // 微信API密钥
     wx_ctr: null, // 微信证书
+    wx_img: null,
     zfb_appid: '', // 支付宝APPID
     zfb_pid: '', // 支付宝PID
     zfb_public_key: '', // 支付宝公钥
     zfb_private_key: '', // 用户私钥
+    zfb_img: null,
     payee: '', // 收款方姓名
   }
 
@@ -94,6 +96,40 @@ class Payment extends Component {
     })
   }
 
+  zgbImg = () =>{
+    const {
+      zfb_appid,
+      zfb_pid,
+      zfb_public_key,
+      zfb_private_key
+    } = this.state;
+
+    let params = {
+      zfb_appid,
+      zfb_pid,
+      zfb_public_key,
+      zfb_private_key
+    }
+    console.log(params);
+  }
+
+  wxImg = () =>{
+    const {
+      wx_appid,
+      wx_mchid,
+      wx_apikey,
+      wx_ctr,
+    } = this.state;
+
+    let params = {
+      wx_appid,
+      wx_mchid,
+      wx_apikey,
+      wx_ctr,
+    }
+    console.log(params);
+  }
+
   render() {
     const { history , match } = this.props;
     const {
@@ -103,10 +139,12 @@ class Payment extends Component {
       wx_mchid, // 微信商铺ID
       wx_apikey, // 微信API密钥
       wx_ctr, // 微信证书
+      wx_img,
       zfb_appid, // 支付宝APPID
       zfb_pid, // 支付宝PID
       zfb_public_key, // 支付宝公钥
       zfb_private_key, // 用户私钥
+      zfb_img
     } = this.state;
 
     let title = id == -1 ? '添加支付' : '修改支付';
@@ -169,10 +207,19 @@ class Payment extends Component {
                   className={styles.files}
                   onChange={this.setUp}/>
                 </List.Item>
-                <div className={styles.erweima}>
-                  <img src={er} />
-                  <a>二维码测试</a>
-                </div>
+                {
+                  (id != -1) &&
+                  <div className={styles.erweima}>
+                    <div className={styles.img}>
+                      {
+                        wx_img
+                        &&
+                        <img src={wx_img} />
+                      }
+                    </div>
+                    <a onClick={this.wxImg}>二维码测试</a>
+                  </div>
+                }
               </div>
             </Accordion.Panel>
           </Accordion>
@@ -213,10 +260,19 @@ class Payment extends Component {
                     autoHeight
                   />
                 </List>
-                <div className={styles.erweima}>
-                  <img src={er} />
-                  <a>二维码测试</a>
-                </div>
+                {
+                  (id != -1) &&
+                  <div className={styles.erweima}>
+                    <div className={styles.img}>
+                      {
+                        zfb_img
+                        &&
+                        <img src={zfb_img} />
+                      }
+                    </div>
+                    <a onClick={this.zgbImg}>二维码测试</a>
+                  </div>
+                }
               </div>
             </Accordion.Panel>
           </Accordion>
