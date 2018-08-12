@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import styles from './style.scss';
 import { NavBar, Icon, List, InputItem, ImagePicker, Button, WingBlank, Picker, Toast } from 'antd-mobile';
 
-import { _createUser, _getUser } from '_s/user';
+import { _createUser, _getUser, _editUser } from '_s/user';
 
 class Personnel extends Component {
 
@@ -61,21 +61,21 @@ class Personnel extends Component {
       Toast.fail('权限不能为空', 1);
       return;
     }
+
     if(id == -1){
       _createUser({ user_name, mobile, company, level, password })
       .then(res => {
-        console.log(res);
         if(res == 1){
           history.goBack()
         }
       })
     }else{
-      // _editGood({ id, name, price, image_id })
-      // .then(res =>{
-      //   if(res == 1){
-      //     history.goBack()
-      //   }
-      // })
+      _editUser({ id, user_name, mobile, company, level, password })
+      .then(res =>{
+        if(res == 1){
+          history.goBack()
+        }
+      })
     }
   }
 
@@ -83,6 +83,8 @@ class Personnel extends Component {
   render() {
     const { chhild, history , match, children } = this.props;
     const { id, data, user_name, mobile, company, level, password } = this.state;
+
+    let levelArr = [`${level}`];
 
     let title = id == -1 ? '添加人员' : '修改人员';
     return (
@@ -92,7 +94,7 @@ class Personnel extends Component {
           icon={<Icon type="left" />}
           onLeftClick={() => history.goBack()}
         >
-          添加人员
+          {title}
         </NavBar>
         <div className={styles.addShoping}>
           <List>
@@ -123,7 +125,7 @@ class Personnel extends Component {
             <Picker
               data={data}
               cols={1}
-              value={level}
+              value={levelArr}
               onOk={value=>this.setState({ level: value })}
             >
               <List.Item arrow="horizontal">
