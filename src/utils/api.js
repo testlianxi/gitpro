@@ -72,6 +72,9 @@ const pay = {
 
   // 创建支付信息
   create :  `${HOST}/create_pay`,
+
+  // 通过id获取支付信息
+  getPayById: `${HOST}/get_pay_info`,
 }
 
 // 设备
@@ -115,6 +118,8 @@ const user = {
 
   get: `${HOST}/get_user_info`,
 
+  edit: `${HOST}/edit_user`,
+
   create :  `${HOST}/create_user`,
 
   // 添加用户管理的设备
@@ -122,6 +127,12 @@ const user = {
 
   // 重置用户名密码
   reset: `${HOST}/reset_psw`,
+
+  // 获取人员设备列表
+  deviceList: `${HOST}/user_device_list`,
+
+  // 新增人员设备
+  createDeviceList: `${HOST}/create_user_device`,
 }
 
 export default {

@@ -11,7 +11,6 @@ const {
 
 // 通过id获取图片
 const _getImageById = (params) =>{
-
   return request(getImageById,{
     method: "GET",
     body: params
@@ -56,11 +55,22 @@ const _getFileById = (params) =>{
 
 // 上传文件
 const _uploadFile = (params) =>{
+  let { files } = params;
+  const formData = new FormData();
+  formData.append('files', files);
+
   return request(uploadFile,{
-    method: "GET",
-    body: params
+    method: "POST",
+    body: formData
   }).then(res =>{
-    console.log(res);
+    let temp = res.json();
+    return temp;
+  }).then(res =>{
+    if(res.status == 1){
+      return res.data.id;
+    }else{
+      console.log('上传错误');
+    }
   })
 }
 

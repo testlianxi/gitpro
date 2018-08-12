@@ -8,6 +8,17 @@ import Search from '_c/search';
 import Pagination from '_c/pagination';
 import { _getUserList } from '_s/user';
 
+const LEVEL = [{
+  value: '0',
+  label: '无权限'
+},{
+  value: '2',
+  label: '公司管理员'
+},{
+  value: '3',
+  label: '职员'
+}]
+
 class Personnel extends Component {
   state = {
     search: '',
@@ -49,7 +60,7 @@ class Personnel extends Component {
   render() {
     const { history, match } = this.props;
     const { offset, totalPage, paginationList } = this.state;
-    console.log(paginationList);
+
     return (
       <div className='conter'>
         <NavBar
@@ -68,12 +79,14 @@ class Personnel extends Component {
         <div className={styles.box}>
           {
             paginationList.map((item,i)=>{
+              let tempLevel = LEVEL.find((two) => two.value == item.level);
+              tempLevel = tempLevel ? tempLevel.label : ''
               return (
                 <section key={i} className={styles.people}>
-                  <p>登录名：{item.name}</p>
+                  <p>登录名：{item.username}</p>
                   <p>联系方式：{item.mobile}</p>
                   <p>所属单位：{item.company}</p>
-                  <p>权限：{item.name}</p>
+                  <p>权限：{ tempLevel }</p>
                   <div className={styles.ctrl}>
                     <Link to={`${ match.path }/add/${item.id}`} size='small'>修改</Link>
                     <Link to={`${ match.path }/AddEquipment/${item.id}`} size='small'>添加设备</Link>

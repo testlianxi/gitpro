@@ -19,6 +19,7 @@ const Header = (props) => {
 					<li><Link to="Payment">支付管理</Link></li>
 					<li><Link to="Equipment">设备管理</Link></li>
 					<li><Link to="Personnel">人员管理</Link></li>
+					<li><Link to="Software">软件更新</Link></li>
 	    	</ul>
     	</div>
     </section>

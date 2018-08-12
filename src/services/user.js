@@ -6,8 +6,27 @@ const {
   addDevice,
   create,
   reset,
-  get
+  get,
+  edit,
+  deviceList,
+  createDeviceList
 } = user;
+
+const _createDeviceList = (params)=> {
+  return request(createDeviceList, {
+    method: "GET",
+    body: params
+  }).then(res =>{
+    return res.data.status
+  });
+}
+
+const _getDeviceList = (params)=> {
+  return request(deviceList, {
+    method: "GET",
+    body: params
+  });
+}
 
 // 获取用户列表
 const _getUserList = (params) =>{
@@ -49,16 +68,6 @@ const _getUser = (params) =>{
   })
 }
 
-// 为用户添加设备
-const _addDevice= (params) =>{
-  return request(addDevice,{
-    method: "GET",
-    body: params
-  }).then(res =>{
-    console.log(res);
-  })
-}
-
 // 创建用户
 const _createUser = (params) =>{
   return request(create,{
@@ -68,6 +77,17 @@ const _createUser = (params) =>{
     return res.data.status
   })
 }
+
+// 修改用户
+const _editUser = (params) =>{
+  return request(edit,{
+    method: "GET",
+    body: params
+  }).then(res =>{
+    return res.data.status
+  })
+}
+
 
 // 重置密码
 const _reset = (params) =>{
@@ -80,9 +100,11 @@ const _reset = (params) =>{
 }
 
 export {
-  _addDevice,
   _createUser,
   _reset,
   _getUserList,
-  _getUser
+  _getUser,
+  _editUser,
+  _getDeviceList,
+  _createDeviceList
 }
