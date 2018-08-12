@@ -35,10 +35,9 @@ class Payment extends Component {
       search,
     })
     .then(res => {
-      let len = Math.ceil(res.length / size);
       this.setState({
-        payList: res,
-        totalPage: len,
+        payList: res.result,
+        totalPage: res.total_page,
       })
     });
   }

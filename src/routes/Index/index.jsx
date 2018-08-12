@@ -57,13 +57,13 @@ class Index extends Component {
   componentWillMount() {
     const { dispatch } = this.props;
 
-    dispatch({
-      type: 'Index/login'
-    })
-      .then(data => {
-        if (data.data.status === '1') console.log('登陆成功');
-        else console.log('登陆失败');
-      });
+    // dispatch({
+    //   type: 'Index/login'
+    // })
+    //   .then(data => {
+    //     if (data.data.status === '1') console.log('登陆成功');
+    //     else console.log('登陆失败');
+    //   });
 
     this.loadCompanySaleStat();
   }

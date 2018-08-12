@@ -39,7 +39,7 @@ const _getGoodList = (params) =>{
       let temp = res.data;
       let { status, data } = temp;
       if(status == 1){
-        return data.result
+        return data
       }else{
         throw new Error('返回错误')
       }

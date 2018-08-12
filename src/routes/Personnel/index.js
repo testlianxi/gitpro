@@ -45,10 +45,9 @@ class Personnel extends Component {
       search,
     })
     .then(res => {
-      let len = Math.ceil(res.length / size);
       this.setState({
-        paginationList: res,
-        totalPage: len,
+        paginationList: res.result,
+        totalPage: res.total_page,
       })
     });
   }

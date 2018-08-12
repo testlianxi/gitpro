@@ -37,10 +37,9 @@ class Commodity extends Component {
       search,
     })
     .then(res => {
-      let len = Math.ceil(res.length / size);
       this.setState({
-        goodList: res,
-        totalPage: len,
+        goodList: res.result,
+        totalPage: res.total_page,
       })
     });
   }
