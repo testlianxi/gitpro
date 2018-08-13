@@ -3,12 +3,20 @@ import api from '_u/api';
 
 const {
   login, companySaleStat, companyDeviceList,
-  orderList, refund, paperOrderList,
+  orderList, refund, paperOrderList, userLoginOut
 } = api;
 // 登陆
 const userLogin = (params) => {
   return request(`${login}`, {
     method: "POST",
+    body: params
+  });
+};
+
+// 退出
+const userLogot = (params) => {
+  return request(`${userLoginOut}`, {
+    method: "GET",
     body: params
   });
 };
@@ -61,4 +69,5 @@ export default {
   getOrderList,
   getRefund,
   getPaperOrderList,
+  userLogot,
 }

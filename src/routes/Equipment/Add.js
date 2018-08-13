@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import styles from './style.scss';
 import Title from '_c/topbar';
 import service from '_s/device';
+import { HOST } from '_u/api';
 import { NavBar, Icon, Tabs, InputItem, List, Picker, Toast } from 'antd-mobile';
 import { _getPayList } from '_s/pay';
 import {
@@ -11,6 +12,7 @@ import {
 } from '_s/device';
 import { _getGoodList } from '_s/good';
 import Shoping from '_c/Shoping';
+
 const tabs = [
   { title: '出厂信息' },
   { title: '基本信息'},
@@ -30,6 +32,7 @@ const GoodsItem = (props) => {
   return (
     <li className={styles.goods}>
       <div className={styles.goodsinfo}>
+        <span><img src={data.image_url} alt="请选择商品" /></span>
         <span>
           价格
           <br />
@@ -195,6 +198,7 @@ class Equipment extends Component {
       goods_id: '',
       price: '',
       inventory: '',
+      image_url: '',
       aisle_id: aisle_info_list.length + 1
     });
     this.setState({aisle_info_list});
@@ -259,9 +263,12 @@ class Equipment extends Component {
     this.setState({currentIndex, showGoods: true});
   }
 
-  setGoodsId = (id) => {
+  setGoodsId = (id, image_url) => {
     const { aisle_info_list, currentIndex } = this.state;
+    const url = HOST + image_url;
+
     aisle_info_list[currentIndex].goods_id = id;
+    aisle_info_list[currentIndex].image_url = url;
     this.setState({aisle_info_list, showGoods: false});
   }
 
@@ -472,7 +479,7 @@ class Equipment extends Component {
               goodList.map((item,i)=>{
                 return (
                   <Shoping money={item.price} name={item.name} url={item.image_url} key={i}>
-                    <a href="javascript:;" onClick={() => this.setGoodsId(item.id)}>选择</a>
+                    <a href="javascript:;" onClick={() => this.setGoodsId(item.id, item.image_url)}>选择</a>
                   </Shoping>
                 )
               })

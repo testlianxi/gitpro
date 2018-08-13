@@ -4,6 +4,9 @@ const HOST = ENV ? 'http://api.mengziyou.com' : 'http://api.mengziyou.com';
 // 登陆接口
 const login = `${HOST}/user_login`;
 
+// 退出接口
+const userLoginOut = `${HOST}//user_login_out_get`;
+
 // 获取今天月全部销售额
 const companySaleStat = `${HOST}/company_sale_stat`;
 
@@ -142,6 +145,7 @@ export default {
   orderList,
   refund,
   paperOrderList,
+  userLoginOut
 }
 
 export {

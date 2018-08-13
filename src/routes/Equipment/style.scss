@@ -192,6 +192,11 @@
 		.goodsinfo {
 			height: 50px;
 			margin-bottom: 15px;
+			img {
+				max-width: 100%;
+				max-height: 100%;
+				vertical-align: middle;
+			}
 			span {
 				float: left;
 				width: 22%;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 
 import service from '_s/Index';
 
@@ -24,7 +25,16 @@ class Index extends Component {
 		};
 	}
 
-	backClick = () => {}
+	backClick = () => {
+    const { dispatch } = this.props;
+    service.userLogot()
+      .then(res => {
+        const data = res.data;
+        if (+data.status === 1) {
+          dispatch(routerRedux.push('/login'));
+        }
+      })
+  }
 
 	menuClick = () => {
 		this.setState({showMenu: true})
@@ -40,6 +50,7 @@ class Index extends Component {
     getCompanySaleStat()
       .then(res => {
         const data = res.data;
+        if (!data) return;
         if (+data.status === 1) {
           const { day_amount, month_amount, total_amount, name } = data.data.data;
           this.setState({
