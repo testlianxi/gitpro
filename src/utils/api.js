@@ -80,7 +80,7 @@ const pay = {
   getPayById: `${HOST}/get_pay_info`,
 
   // 通过id获取支付信息
-  getPayState: `${HOST}/loop_look_pay_state_get`
+  getPayState: `${HOST}/loop_look_pay_state`
 }
 
 // 设备
