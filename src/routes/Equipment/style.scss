@@ -186,50 +186,72 @@
 	.goods {
 		padding: 15px 0px;
 		border-bottom: 1px solid #d7d7d7;
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
 		&:last-child {
-			border: none;
+			/*border: none;*/
 		}
 		.goodsinfo {
+			position: relative;
 			height: 50px;
 			margin-bottom: 15px;
+			.img {
+				float: left;
+				width: 100px;
+				height: 100px;
+				margin-right: 8px;
+				text-align: center;
+				border: 1px solid #ccc;
+			}
+			.goodsitem {
+				margin-bottom: 5px;
+				padding-top: 5px;
+			}
+			input {
+				width: 50px;
+				border: 1px solid #d7d7d7;
+				border-radius: 2px;
+				text-align: center;
+			}
 			img {
 				max-width: 100%;
 				max-height: 100%;
 				vertical-align: middle;
 			}
-			span {
-				float: left;
-				width: 22%;
-				height: 50px;
-				box-sizing: border-box;
-				padding: 5px 0px;
-				margin-right:4%;
-				line-height: 18px;
-				text-align: center;
-				color: #108ee9;
-				border: 1px solid #108ee9;
-				border-radius: 4px;
-				input {
-					width: 50px;
-					margin: 0 auto;
-					border: 1px solid #d7d7d7;
-					border-radius: 2px;
-					text-align: center;
-				}
-				&:last-child {
-					float: right;
-					margin-right: 0;
-					cursor: pointer;
-					line-height: 40px;
-					color: #fff;
-					background: #108ee9;
-					border: 1px solid #108ee9;
-				}
-			}
+		}
+		.addbtn {
+			display: inline-block;
+			height: 28px;
+			width: 70px;
+	    line-height: 28px;
+	    border-radius: 4px;
+	    text-align: center;
+	    color: #fff;
+	    background: #108ee9;
+	    font-size: 12px;
+	    border: 1px solid #108ee9;
+		}
+		.update {
+			position: absolute;
+	    right: 0px;
+	    top: 1px;
+	    height: 45px;
+	    width: 70px;
+	    line-height: 45px;
+	    border-radius: 4px;
+	    text-align: center;
+	    color: #fff;
+	    background: #108ee9;
+	    font-size: 12px;
 		}
 		.goodstatus {
+			margin-top: 15px;
+    	overflow: hidden;
 			span {
-				float: right;
+				float: left;
 		    margin-right: 10px;
 		    padding: 5px 14px;
 		    color: #fff;
@@ -239,17 +261,7 @@
 		    margin-top: 3px;
 			}
 			a {
-				display: block;
-				height: 28px;
-				width: 70px;
-				margin-top: -5px;
-		    line-height: 28px;
-		    border-radius: 4px;
-		    text-align: center;
-		    color: #fff;
-		    background: #108ee9;
-		    font-size: 12px;
-		    border: 1px solid #108ee9;
+				float: right
 			}
 		}
 	}

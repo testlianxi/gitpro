@@ -18,11 +18,7 @@ const tabs = [
   { title: '基本信息'},
   { title: '货道信息' },
 ];
-// <span>
-//   推货
-//   <br />
-//   <input type="number" placeholder="请输入" />
-// </span>
+
 const GoodsItem = (props) => {
   const {
     index,
@@ -32,23 +28,21 @@ const GoodsItem = (props) => {
   return (
     <li className={styles.goods}>
       <div className={styles.goodsinfo}>
-        <span><img src={data.image_url} alt="请选择商品" /></span>
-        <span>
-          价格
-          <br />
+        <div className={styles.img}><img src={data.image_url} alt="请选择商品" /></div>
+        <div className={styles.goodsitem}>
+          价格：
           <input type="number" onChange={e => {changeInput(index, 'price', e.target.value)}} value={data.price} placeholder="请输入" />
-        </span>
-        <span>
-          库存
-          <br />
+        </div>
+        <div className={styles.goodsitem}>
+          库存：
           <input type="number" onChange={e => {changeInput(index, 'inventory', e.target.value)}} value={data.inventory} placeholder="请输入" />
-        </span>
-        <span onClick={() => upDate(index)}>点击更新</span>
-      </div>
-      <div className={styles.goodstatus}>
-        <span>缺货</span>
-        <span>卡货</span>
-        <a href="javascript:;" onClick={() => addGoods(index)}>添加商品</a>
+        </div>
+        <a className={styles.update} href="javascript:;" onClick={() => addGoods(index)}>添加商品</a>
+        <div className={styles.goodstatus}>
+        <a href="javascript:;" className={styles.addbtn} onClick={() => upDate(index)}>点击更新</a>
+          <span>缺货</span>
+          <span>卡货</span>
+        </div>
       </div>
     </li>
   );
@@ -209,7 +203,7 @@ class Equipment extends Component {
     _addaislelist({data: JSON.stringify(aisle_info_list)})
       .then(res => {
         if (res.data.status === '1') {
-           Toast.fail('保存成功', 1);
+           Toast.success('保存成功', 1);
         } else {
           alert('保存失败');
         }
