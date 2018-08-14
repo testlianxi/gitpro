@@ -93,7 +93,7 @@ class Personnel extends Component {
           let filter = temp.filter(item => item.relate != 0);
           let selector = [];
           if( filter instanceof Array && filter.length > 0){
-            selector= filter.map(item => item.relate);
+            selector= filter.map(item => item.id);
           }
           this.setState({
             selector,

@@ -3,8 +3,9 @@ import { connect } from 'dva';
 import styles from './style.scss';
 import { NavBar, Icon, List, Accordion, InputItem, TextareaItem, WingBlank, Button } from 'antd-mobile';
 import er from './er.png'
-import { _getPayById, _editPay, _createPay } from '_s/pay';
+import { _getPayById, _editPay, _createPay, _getPayState } from '_s/pay';
 import { _uploadFile } from '_s/utils';
+import QRCode from 'qrcode.react';
 
 class Payment extends Component {
   state = {
@@ -13,12 +14,12 @@ class Payment extends Component {
     wx_mchid: '', // 微信商铺ID
     wx_apikey: '', // 微信API密钥
     wx_ctr: null, // 微信证书
-    wx_img: null,
+    wx_qr_image: null,
     zfb_appid: '', // 支付宝APPID
     zfb_pid: '', // 支付宝PID
     zfb_public_key: '', // 支付宝公钥
     zfb_private_key: '', // 用户私钥
-    zfb_img: null,
+    zfb_qr_image: null,
     payee: '', // 收款方姓名
   }
 
@@ -98,19 +99,11 @@ class Payment extends Component {
 
   zgbImg = () =>{
     const {
-      zfb_appid,
-      zfb_pid,
-      zfb_public_key,
-      zfb_private_key
+      order_id
     } = this.state;
-
-    let params = {
-      zfb_appid,
-      zfb_pid,
-      zfb_public_key,
-      zfb_private_key
-    }
-    console.log(params);
+    _getPayState({orderId: order_id}) .then(res=>{
+      console.log(res);
+    })
   }
 
   wxImg = () =>{
@@ -139,12 +132,12 @@ class Payment extends Component {
       wx_mchid, // 微信商铺ID
       wx_apikey, // 微信API密钥
       wx_ctr, // 微信证书
-      wx_img,
+      wx_qr_image,
       zfb_appid, // 支付宝APPID
       zfb_pid, // 支付宝PID
       zfb_public_key, // 支付宝公钥
       zfb_private_key, // 用户私钥
-      zfb_img
+      zfb_qr_image
     } = this.state;
 
     let title = id == -1 ? '添加支付' : '修改支付';
@@ -212,12 +205,12 @@ class Payment extends Component {
                   <div className={styles.erweima}>
                     <div className={styles.img}>
                       {
-                        wx_img
+                        wx_qr_image
                         &&
-                        <img src={wx_img} />
+                        <QRCode value={wx_qr_image} />
                       }
                     </div>
-                    <a onClick={this.wxImg}>二维码测试</a>
+                    <a onClick={this.zgbImg}>二维码测试</a>
                   </div>
                 }
               </div>
@@ -265,9 +258,9 @@ class Payment extends Component {
                   <div className={styles.erweima}>
                     <div className={styles.img}>
                       {
-                        zfb_img
+                        zfb_qr_image
                         &&
-                        <img src={zfb_img} />
+                        <QRCode value={zfb_qr_image} />
                       }
                     </div>
                     <a onClick={this.zgbImg}>二维码测试</a>
