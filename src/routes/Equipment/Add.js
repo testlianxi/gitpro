@@ -29,6 +29,7 @@ const GoodsItem = (props) => {
     <li className={styles.goods}>
       <div className={styles.goodsinfo}>
         <div className={styles.img}><img src={data.image_url} alt="请选择商品" /></div>
+        <div className={styles.goodsitem}>货道编号：{data.aisle_id}</div>
         <div className={styles.goodsitem}>
           价格：
           <input type="number" onChange={e => {changeInput(index, 'price', e.target.value)}} value={data.price} placeholder="请输入" />

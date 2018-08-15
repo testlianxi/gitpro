@@ -27,6 +27,7 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   let temp = {
+    credentials: 'include',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
       'X-Requested-with': 'XMLHttpRequest',
