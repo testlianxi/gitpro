@@ -24,19 +24,15 @@
   box-shadow: 0 1px 1px 0 rgba(0,0,0,.1)
 }
 
-.second {
-
-}
-
 .erweima {
   display: flex;
   > .img {
     height: 150px;
     width: 150px;
     margin: 15px;
-    > img {
-      height: 100%;
-      width: 100%;
+    display: flex;
+    > canvas {
+      margin: auto;
     }
   }
 
@@ -46,7 +42,7 @@
     background: #108ee9;
     line-height: 50px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 60px;
     margin-right: 20px;
     color: #fff;
     border-radius: 4px;

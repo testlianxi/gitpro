@@ -6,9 +6,19 @@ const {
   list,
   edit,
   create,
-  getPayById
+  getPayById,
+  getPayState
 } = pay;
 
+const _getPayState =(params)=>{
+  return request(getPayState, {
+    method: "GET",
+    body: params
+  }).then(res =>{
+    console.log(res);
+    return res.data.status
+  })
+}
 
 const _getPayById = (params) =>{
   return request(getPayById,{
@@ -74,5 +84,6 @@ export {
   _createPay,
   _editPay,
   _getPayList,
-  _getPayById
+  _getPayById,
+  _getPayState
 }
