@@ -22,6 +22,7 @@ class Index extends Component {
       total_amount: '00.00',
       
       name: '',
+      menus: []
 		};
 	}
 
@@ -65,6 +66,22 @@ class Index extends Component {
       });
   }
 
+  loadMenu() {
+    const { getMenu } = service;
+
+    getMenu()
+      .then(res => {
+        const data = res.data;
+        if (!data) return;
+        if (+data.status === 1) {
+          const { menus } = data.data.menus;
+          this.setState({menus})
+        } else {
+          console.log('导航菜单获取失败');
+        }
+      });
+  }
+
   componentWillMount() {
     const { dispatch } = this.props;
 
@@ -77,10 +94,11 @@ class Index extends Component {
     //   });
 
     this.loadCompanySaleStat();
+    this.loadMenu();
   }
 
   render() {
-  	const { showMenu } = this.state;
+  	const { showMenu, menus = [] } = this.state;
   	const { day_amount, month_amount, total_amount, name } = this.state;
     return (
       <div className={styles.main}>
@@ -88,6 +106,7 @@ class Index extends Component {
         	userName={name}
         	backClick={this.backClick}
         	menuClick={this.menuClick}
+          menus={menus}
         />
         { showMenu && <MenuNav closeYayout={this.closeYayout} /> }
         <Total

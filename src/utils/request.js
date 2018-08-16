@@ -17,7 +17,11 @@ function checkStatus(response) {
   error.response = response;
   throw error;
 }
-
+function getCookie(name) {
+  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+  if(arr != null) return decodeURIComponent(arr[2]); 
+  return null;
+}
 /**
  * Requests a URL, returning a promise.
  *
@@ -26,6 +30,9 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+  if (!getCookie('user') && location.hash !== '#/login') {
+    return (location.hash = '#/login')
+  }
   let temp = {
     credentials: 'include',
     headers: {

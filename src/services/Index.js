@@ -3,7 +3,8 @@ import api from '_u/api';
 
 const {
   login, companySaleStat, companyDeviceList,
-  orderList, refund, paperOrderList, userLoginOut
+  orderList, refund, paperOrderList, userLoginOut,
+  menus
 } = api;
 // 登陆
 const userLogin = (params) => {
@@ -61,6 +62,14 @@ const getPaperOrderList = (params) => {
   });
 };
 
+// 获取导航菜单
+const getMenu = (params) => {
+  return request(`${menus}`, {
+    method: "GET",
+    body: params
+  });
+};
+
 
 export default {
   userLogin,
@@ -70,4 +79,5 @@ export default {
   getRefund,
   getPaperOrderList,
   userLogot,
+  getMenu,
 }

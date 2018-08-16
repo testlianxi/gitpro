@@ -2,7 +2,7 @@ import Title from '_c/topbar';
 import styles from './style.scss';
 import { Link } from 'dva/router';
 const Header = (props) => {
-	const { closeYayout } = props;
+	const { closeYayout, menus } = props;
 	const move = e => {
 		if (e.currentTarget === e.target) closeYayout();
 	}
@@ -15,11 +15,10 @@ const Header = (props) => {
     			leftClick={closeYayout}
     	  />
 	    	<ul className={styles.list}>
-	    		<li><Link to="Commodity">商品管理</Link></li>
-					<li><Link to="Payment">支付管理</Link></li>
-					<li><Link to="Equipment">设备管理</Link></li>
-					<li><Link to="Personnel">人员管理</Link></li>
-					<li><Link to="Software">软件更新</Link></li>
+	    		{
+	    			menus && menus.length ?
+	    			menus.map(item => {<li key={item.id}><Link to={item.url}>{item.title}</Link></li>}) : null
+	    		}
 	    	</ul>
     	</div>
     </section>

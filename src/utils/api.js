@@ -22,6 +22,9 @@ const refund = `${HOST}/refund`;
 // 纸币记录
 const paperOrderList = `${HOST}/paper_order_list`;
 
+// 获取导航菜单
+const menus = `${HOST}/get_menus`;
+
 const utils = {
   // 通过id获取图片
   getImageById :  `${HOST}/get_image_by_id`,
@@ -148,7 +151,8 @@ export default {
   orderList,
   refund,
   paperOrderList,
-  userLoginOut
+  userLoginOut,
+  menus
 }
 
 export {
