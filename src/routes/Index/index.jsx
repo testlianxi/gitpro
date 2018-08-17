@@ -74,7 +74,8 @@ class Index extends Component {
         const data = res.data;
         if (!data) return;
         if (+data.status === 1) {
-          const { menus } = data.data.menus;
+          const { menus } = data.data;
+          console.log(menus)
           this.setState({menus})
         } else {
           console.log('导航菜单获取失败');
