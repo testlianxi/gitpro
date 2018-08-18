@@ -92,6 +92,8 @@ class Equipment extends Component {
       adv_info: '请选择文件',
       // 软件更新
       soft_info: '请选择文件',
+
+      level: localStorage.level,
     };
   }
 
@@ -267,71 +269,60 @@ class Equipment extends Component {
     this.setState({aisle_info_list, showGoods: false});
   }
 
-  componentWillMount() {
-    const { match } = this.props;
-    const id = match.params.id;
-    this.loadCompany();
-    this.loadGoodList();
-    this.setState({id}, () => {
-      if (id !== '-1') this.loadDeviceInnfo();
-    });
-  }
-
-  render() {
+  TabsChildren = () => {
     const { device_type, android_type, control_type, operator_company, device_id } = this.state;
     const { 
       id, password, payList, company_id, address, device_name, service_tel,
       operator, yyryData, adv_info, soft_info,
       goodList, showGoods, aisle_info_list,
+      level,
     } = this.state;
     const { history } = this.props
-    return (
-      <div className={styles.equadd}>
-        <Title
-          leftContent="返回"
-          centerContent="添加设备"
-          rightContent="保存"
-          leftClick={() => {history.goBack()}}
-          rightClick={this.savaData}
-        />
-        <Tabs tabs={id === '-1' ? tabs.slice(0, 2) : tabs}>
 
-          <div className={styles.tabitem}>
-            <List>
-              <InputItem
-                value={device_type}
-                clear
-                placeholder="请输入设备型号"
-                onChange={device_type => {this.setState({device_type})}}
-              >设备型号</InputItem>
-            </List>
-            <List>
-              <InputItem
-                value={android_type}
-                clear
-                placeholder="请输入安卓型号"
-                onChange={android_type => {this.setState({android_type})}}
-              >安卓型号</InputItem>
-            </List>
-            <List>
-              <InputItem
-                value={control_type}
-                clear
-                placeholder="请输入主控型号"
-                onChange={control_type => {this.setState({control_type})}}
-              >主控型号</InputItem>
-            </List>
-            <List>
-              <InputItem
-                value={operator_company}
-                clear
-                placeholder="请输入运营公司"
-                onChange={operator_company => {this.setState({operator_company})}}
-              >运营公司</InputItem>
-            </List>
-          </div>
+    var isEdit = +level === 1;
+    var domArr = [
+      (
+        <div className={styles.tabitem + (isEdit ? '' : ' ' + styles.noedit)}>
+          <List>
+            <InputItem
+              value={device_type}
+              clear
+              placeholder="请输入设备型号"
+              onChange={device_type => {this.setState({device_type})}}
+            >设备型号</InputItem>
+          </List>
+          <List>
+            <InputItem
+              value={android_type}
+              clear
+              placeholder="请输入安卓型号"
+              onChange={android_type => {this.setState({android_type})}}
+            >安卓型号</InputItem>
+          </List>
+          <List>
+            <InputItem
+              value={control_type}
+              clear
+              placeholder="请输入主控型号"
+              onChange={control_type => {this.setState({control_type})}}
+            >主控型号</InputItem>
+          </List>
+          <List>
+            <InputItem
+              value={operator_company}
+              clear
+              placeholder="请输入运营公司"
+              onChange={operator_company => {this.setState({operator_company})}}
+            >运营公司</InputItem>
+          </List>
+        </div>
+      ),
+    ];
 
-          <div className={styles.tabitem}>
+    if (+level !== 3) {
+      domArr.push(
+        (
+          <div className={styles.tabitem + (isEdit ? '' : ' ' + styles.noedit)}>
             <List>
               <InputItem
                 value={device_id}
@@ -437,33 +428,79 @@ class Equipment extends Component {
                 }
               </div>
             </div>
-
           </div>
-          {
-            id !== '-1'
-            &&
-            (<div className={styles.tabitem}>
-              <div className={styles.tools}>
-                <a href="javascript:;" onClick={this.addAisle}>新增货道</a>
-                <a href="javascript:;" onClick={this.upDateAll}>一键更新</a>
-              </div>
-              <ul>
-                {
-                  aisle_info_list && aisle_info_list.length ?
-                  aisle_info_list.map((item, index) => (
-                    <GoodsItem
-                      index={index}
-                      key={item.aisle_id}
-                      data={item}
-                      changeInput={this.changeInput}
-                      upDate={this.upDate}
-                      addGoods={this.addGoods}
-                    />)
-                  ) : null
-                }
-              </ul>
-            </div>)
-          }
+        )
+      )
+    }
+
+    if (id !== '-1') {
+      domArr.push(
+        (
+          <div className={styles.tabitem}>
+            <div className={styles.tools}>
+              {+level !== 3 && <a href="javascript:;" onClick={this.addAisle}>新增货道</a>}
+              <a href="javascript:;" onClick={this.upDateAll}>一键更新</a>
+            </div>
+            <ul>
+              {
+                aisle_info_list && aisle_info_list.length ?
+                aisle_info_list.map((item, index) => (
+                  <GoodsItem
+                    index={index}
+                    key={item.aisle_id}
+                    data={item}
+                    changeInput={this.changeInput}
+                    upDate={this.upDate}
+                    addGoods={this.addGoods}
+                  />)
+                ) : null
+              }
+            </ul>
+          </div>
+        )
+      )
+
+    }
+    return domArr;
+  }
+
+  componentWillMount() {
+    const { match } = this.props;
+    const id = match.params.id;
+    this.loadCompany();
+    this.loadGoodList();
+    this.setState({id}, () => {
+      if (id !== '-1') this.loadDeviceInnfo();
+    });
+  }
+
+  render() {
+    const { device_type, android_type, control_type, operator_company, device_id } = this.state;
+    const { 
+      id, password, payList, company_id, address, device_name, service_tel,
+      operator, yyryData, adv_info, soft_info,
+      goodList, showGoods, aisle_info_list,
+      level,
+    } = this.state;
+    const { history } = this.props
+    var tabTitle = id === '-1' ? tabs.slice(0, 2) : tabs;
+    if (+level === 3 && id !== '-1') {
+      tabTitle = [
+        { title: '出厂信息' },
+        { title: '货道信息' },
+      ]
+    }
+    return (
+      <div className={styles.equadd}>
+        <Title
+          leftContent="返回"
+          centerContent="添加设备"
+          rightContent={+level === 1 ? '保存' : null}
+          leftClick={() => {history.goBack()}}
+          rightClick={+level === 1 ? this.savaData : null}
+        />
+        <Tabs tabs={tabTitle}>
+          {this.TabsChildren()}
         </Tabs>
         {
           <ul style={{display: showGoods ? 'block' : 'none'}} className={styles.selectGoods}>

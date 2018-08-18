@@ -62,7 +62,7 @@ class List extends Component {
         const data = res.data;
         if (+data.status === 1) {
           this.setState({
-            companyDeviceList: data.data.result.length ? data.data.result : null,
+            companyDeviceList: data.data.result && data.data.result.length ? data.data.result : null,
             totalPage: data.data.total_page || null,
           })
         } else {

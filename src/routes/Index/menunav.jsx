@@ -3,6 +3,8 @@ import styles from './style.scss';
 import { Link } from 'dva/router';
 const Header = (props) => {
 	const { closeYayout, menus } = props;
+  console.log('menus')
+  console.log(menus)
 	const move = e => {
 		if (e.currentTarget === e.target) closeYayout();
 	}
@@ -17,7 +19,7 @@ const Header = (props) => {
 	    	<ul className={styles.list}>
 	    		{
 	    			menus && menus.length ?
-	    			menus.map(item => {<li key={item.id}><Link to={item.url}>{item.title}</Link></li>}) : null
+	    			menus.map(item => (<li key={item.id}><Link to={item.url}>{item.title}</Link></li>)) : null
 	    		}
 	    	</ul>
     	</div>

@@ -99,7 +99,7 @@ class Index extends Component {
   }
 
   render() {
-  	const { showMenu, menus = [] } = this.state;
+  	const { showMenu, menus } = this.state;
   	const { day_amount, month_amount, total_amount, name } = this.state;
     return (
       <div className={styles.main}>
@@ -107,9 +107,8 @@ class Index extends Component {
         	userName={name}
         	backClick={this.backClick}
         	menuClick={this.menuClick}
-          menus={menus}
         />
-        { showMenu && <MenuNav closeYayout={this.closeYayout} /> }
+        { showMenu && <MenuNav closeYayout={this.closeYayout} menus={menus} /> }
         <Total
         	todayNum={day_amount}
         	monthNum={month_amount}

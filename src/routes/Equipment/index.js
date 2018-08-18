@@ -36,6 +36,8 @@ class Equipment extends Component {
       offset: 1,
       search: '',
 
+      level: localStorage.level,
+
       totalPage: null,
 
       type: 0,
@@ -94,14 +96,14 @@ class Equipment extends Component {
 
   render() {
     const { history, match } = this.props;
-    const { offset, totalPage, companyDeviceList, type } = this.state;
+    const { offset, totalPage, companyDeviceList, type, level } = this.state;
     return (
       <div className={styles.equipment}>
         <NavBar
           mode="dark"
           icon={<Icon type="left" />}
           onLeftClick={() => history.goBack()}
-          rightContent={<Link to={`${ match.path }/add/-1`}>添加</Link>}
+          rightContent={+level === 1 ? <Link to={`${ match.path }/add/-1`}>添加</Link> : null}
         >
           设备管理
         </NavBar>

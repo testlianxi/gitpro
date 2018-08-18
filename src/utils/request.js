@@ -31,10 +31,10 @@ function getCookie(name) {
  */
 export default function request(url, options) {
   if (!getCookie('user') && location.hash !== '#/login') {
-    return (location.hash = '#/login')
+    location.hash = '#/login'
   }
   let temp = {
-    // credentials: 'include',
+    credentials: 'include',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
       'X-Requested-with': 'XMLHttpRequest',

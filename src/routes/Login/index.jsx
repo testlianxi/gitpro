@@ -26,6 +26,7 @@ class Index extends Component {
       password,
     })
       .then(data => {
+        localStorage.level = data.data.data.level;
         if (data.data.status === '1') {
           dispatch(routerRedux.push('/'));
         } else {

@@ -313,6 +313,19 @@
 		border-bottom: 1px solid #d7d7d7;
 	}
 }
+
+.noedit {
+	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, .6);
+	}
+}
 :global {
 	.am-picker-popup-mask, .am-picker-popup-wrap  {
 		left: 50%;
