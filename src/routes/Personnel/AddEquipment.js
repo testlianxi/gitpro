@@ -56,6 +56,12 @@ const Item = (props) => {
   );
 }
 
+function getCookie(name) {
+  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+  if(arr != null) return decodeURIComponent(arr[2]); 
+  return null;
+}
+
 class Personnel extends Component {
 
   state = {
@@ -147,6 +153,7 @@ class Personnel extends Component {
       size,
       offset: (offset - 1) * size,
       search,
+      user: getCookie('user')
     })
       .then(res => {
         const data = res.data;
