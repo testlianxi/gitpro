@@ -56,12 +56,6 @@ const Item = (props) => {
   );
 }
 
-function getCookie(name) {
-  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-  if(arr != null) return decodeURIComponent(arr[2]); 
-  return null;
-}
-
 class Personnel extends Component {
 
   state = {
@@ -92,6 +86,7 @@ class Personnel extends Component {
         size: 10,
         offset: 0,
         search: '',
+        user: res.user_name
       }).then(res => {
         const data = res.data;
         if (+data.status === 1) {
@@ -147,13 +142,13 @@ class Personnel extends Component {
   }
 
   loadCompanyDeviceList() {
-    const { size, offset, search } = this.state;
+    const { size, offset, search, user } = this.state;
 
     _getDeviceList({
       size,
       offset: (offset - 1) * size,
       search,
-      user: getCookie('user')
+      user: user.user_name
     })
       .then(res => {
         const data = res.data;
