@@ -29,13 +29,16 @@ const GoodsItem = (props) => {
     <li className={styles.goods}>
       <div className={styles.goodsinfo}>
         <div className={styles.img}><img src={data.image_url} alt="请选择商品" /></div>
-        <div className={styles.goodsitem}>货道编号：{data.aisle_id}</div>
         <div className={styles.goodsitem}>
-          价格：
+          <span className={styles.gdstitle}>货道编号：</span>
+          <input type="number" onChange={e => {changeInput(index, 'aisle_id', e.target.value)}} value={data.aisle_id} placeholder="请输入" />
+        </div>
+        <div className={styles.goodsitem}>
+          <span className={styles.gdstitle}>价格：</span>
           <input type="number" onChange={e => {changeInput(index, 'price', e.target.value)}} value={data.price} placeholder="请输入" />
         </div>
         <div className={styles.goodsitem}>
-          库存：
+          <span className={styles.gdstitle}>库存：</span>
           <input type="number" onChange={e => {changeInput(index, 'inventory', e.target.value)}} value={data.inventory} placeholder="请输入" />
         </div>
         <a className={styles.update} href="javascript:;" onClick={() => addGoods(index)}>添加商品</a>
@@ -315,14 +318,6 @@ class Equipment extends Component {
               onChange={operator_company => {this.setState({operator_company})}}
             >运营公司</InputItem>
           </List>
-        </div>
-      ),
-    ];
-
-    if (+level !== 3) {
-      domArr.push(
-        (
-          <div className={styles.tabitem + (isEdit ? '' : ' ' + styles.noedit)}>
             <List>
               <InputItem
                 value={device_id}
@@ -342,20 +337,6 @@ class Equipment extends Component {
             </List>
 
 
-            <div className={styles.skgs}>
-              <div className={styles.label}>收款公司</div>
-              <div className={styles.datasecect}>
-                <Picker
-                  data={payList}
-                  cols="1"
-                  value={company_id}
-                  cascade
-                  onOk={v => {this.setState({company_id: v})}}
-                >
-                  <List.Item onClick={() => {}}></List.Item>
-                </Picker>
-              </div>
-            </div>
 
             <List>
               <InputItem
@@ -383,7 +364,31 @@ class Equipment extends Component {
                 onChange={service_tel => {this.setState({service_tel})}}
               >客服电话</InputItem>
             </List>
+        </div>
+      ),
+    ];
 
+    if (+level !== 3) {
+      domArr.push(
+        (
+          <div className={styles.tabitem + (isEdit ? '' : ' ' + styles.noedit)}>
+
+            <div className={styles.skgs}>
+              <div className={styles.label}>收款公司</div>
+              <div className={styles.datasecect}>
+                <Picker
+                  data={payList}
+                  cols="1"
+                  value={company_id}
+                  cascade
+                  onOk={v => {this.setState({company_id: v})}}
+                >
+                  <List.Item onClick={() => {}}></List.Item>
+                </Picker>
+              </div>
+            </div>
+
+            
             <div className={styles.skgs}>
               <div className={styles.label}>软件更新</div>
               <div className={styles.datasecect}>

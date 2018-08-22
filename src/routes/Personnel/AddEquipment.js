@@ -65,7 +65,6 @@ class Personnel extends Component {
       company: '',
       level: '0'
     },
-    companyDeviceList: [],
     size: 10,
     offset: 1,
     search: '',
@@ -110,18 +109,26 @@ class Personnel extends Component {
 
   save =()=>{
     const { history, match } = this.props;
+    const { companyDeviceList } = this.state;
     const user_id = match.params.id;
 
     const { selector, user } = this.state;
 
     let { user_name, level } = user;
     let device_list = selector;
+    let forbid_device_list = [];
+    companyDeviceList.forEach(item => {
+      if (!device_list.includes(item.id)) {
+        forbid_device_list.push(item.id);
+      }
+    });
 
     _createDeviceList({
       user_id,
       user_name,
       level,
-      device_list
+      device_list,
+      forbid_device_list: forbid_device_list.join(',')
     }).then(res =>{
       if(res == 1){
         history.goBack()

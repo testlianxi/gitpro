@@ -203,12 +203,19 @@
 				width: 100px;
 				height: 100px;
 				margin-right: 8px;
+				line-height: 100px;
 				text-align: center;
 				border: 1px solid #ccc;
 			}
 			.goodsitem {
 				margin-bottom: 3px;
-    		padding-top: 2px;
+				&:first-child {
+					padding-top: 2px;
+				}
+			}
+			.gdstitle {
+			 display: inline-block;
+			 width: 72px;
 			}
 			input {
 				width: 50px;
