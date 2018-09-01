@@ -4,7 +4,7 @@ import api from '_u/api';
 const {
   login, companySaleStat, companyDeviceList,
   orderList, refund, paperOrderList, userLoginOut,
-  menus
+  menus, saleAccountList, deviceListOnly,
 } = api;
 // 登陆
 const userLogin = (params) => {
@@ -70,6 +70,23 @@ const getMenu = (params) => {
   });
 };
 
+// 获取销售统计接口
+const getSaleAccountList = (params) => {
+  return request(`${saleAccountList}`, {
+    method: "GET",
+    body: params
+  });
+};
+
+
+// 获取设备列表
+const getDeviceListOnly = (params) => {
+  return request(`${deviceListOnly}`, {
+    method: "GET",
+    body: params
+  });
+};
+
 
 export default {
   userLogin,
@@ -80,4 +97,6 @@ export default {
   getPaperOrderList,
   userLogot,
   getMenu,
+  getSaleAccountList,
+  getDeviceListOnly,
 }

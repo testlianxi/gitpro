@@ -25,6 +25,11 @@ const paperOrderList = `${HOST}/paper_order_list`;
 // 获取导航菜单
 const menus = `${HOST}/get_menus`;
 
+// 获取导航菜单
+const saleAccountList = `${HOST}/sale_account_list`;
+// 销售统计设备列表
+const deviceListOnly = `${HOST}/device_list_only`;
+
 const utils = {
   // 通过id获取图片
   getImageById :  `${HOST}/get_image_by_id`,
@@ -37,6 +42,15 @@ const utils = {
 
   // 上传文件
   uploadFile: `${HOST}/upload_apk`,
+
+  // 保存
+  getEditSoftware: `${HOST}/edit_software`,
+
+  // 获取单个详情
+  getSoftwareInfo: `${HOST}/get_software_info`,
+
+  // 获取软件信息列表
+  softwareList: `${HOST}/software_list`,
 }
 
 // 商品
@@ -152,7 +166,9 @@ export default {
   refund,
   paperOrderList,
   userLoginOut,
-  menus
+  menus,
+  saleAccountList,
+  deviceListOnly,
 }
 
 export {

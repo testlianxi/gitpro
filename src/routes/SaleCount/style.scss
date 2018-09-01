@@ -37,14 +37,23 @@
 		float: left;
 		padding: 0 10px;
 	}
+	.selected {
+		height: auto;
+		padding-left: 43px;
+		span {
+			margin-left: -43px;
+		}
+	}
 	.selected i {
+		display: inline-block;
 		font-style: normal;
 		font-size: 13px;
-		padding: 4px 6px;
+		padding: 0px 6px;
     border-radius: 3px;
     background-color: #f4f4f4;
     border: 1px solid #dadada;
     margin-right: 10px;
+    margin-bottom: 8px;
 	}
 	.seacrchbtn {
 		display: inline-block;

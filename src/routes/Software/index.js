@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import styles from './style.scss';
-import { NavBar, Icon } from 'antd-mobile';
+import { NavBar, Icon, Toast } from 'antd-mobile';
 import { Link } from 'dva/router';
 
 import Pagination from '_c/pagination';
 import Search from '_c/search';
 
-import { _getPayList } from '_s/pay';
+import { _getSoftwareList } from '_s/utils';
 
 class Payment extends Component {
   state = {
@@ -29,16 +29,25 @@ class Payment extends Component {
   loadPayList() {
     const { size, offset, search } = this.state;
 
-    _getPayList({
+    _getSoftwareList({
       size,
       offset: (offset - 1) * size,
-      search,
+      search
     })
     .then(res => {
-      this.setState({
-        payList: res.result,
-        totalPage: res.total_page,
-      })
+      console.log(res);
+      if (res.status === '1' && res.data.result) {
+        this.setState({
+          payList: res.data.result,
+          totalPage: res.data.total_page,
+        })
+      } else {
+        Toast.fail('列表加载失败', 1);
+      }
+      
+    })
+    .catch(() => {
+      Toast.fail('列表加载失败', 1);
     });
   }
 
@@ -66,13 +75,10 @@ class Payment extends Component {
         />
         <div className={styles.paymentList}>
         {
-          payList.length == 0 && <div>没有数据</div>
-        }
-        {
           payList.map((item,i)=>{
             return (
               <Link key={i} to={`${ match.path }/add/${item.id}`}>
-                <span>{item.name}</span>
+                <span>{item.channel_name}</span>
                 <Icon type='right'/>
               </Link>
             )
