@@ -10,7 +10,6 @@ function checkStatus(response) {
     return location.href = '/';
   }
   if (response.status >= 200 && response.status < 300) {
-    if (response.data.data.status !== '1') alert(response.data.data.error_msg);
     return response;
   }
 
@@ -30,6 +29,7 @@ function getCookie(name) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
+var log = console.log;
 export default function request(url, options) {
   if (!getCookie('user') && location.hash !== '#/login') {
     location.hash = '#/login'
@@ -62,6 +62,12 @@ export default function request(url, options) {
   return fetch(url, temp)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => ({ data }))
+    .then(data => {
+      log(data)
+      if (data.status !== '1') {
+        alert(error_msg);
+      }
+      return { data }
+    })
     .catch(err => ({ err }));
 }
