@@ -24,3 +24,16 @@ app.router(require('./router'));
 
 // 5. Start
 app.start('#root');
+
+
+const changeTitle = () => {
+	if (location.hash.indexOf('login') > -1) {
+		document.title = '商户登陆';
+	} else {
+		document.title = '后台管理';
+	}
+};
+window.onhashchange = changeTitle;
+changeTitle();
+
+

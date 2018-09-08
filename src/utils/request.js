@@ -10,6 +10,7 @@ function checkStatus(response) {
     return location.href = '/';
   }
   if (response.status >= 200 && response.status < 300) {
+    if (response.data.data.status !== '1') alert(response.data.data.error_msg);
     return response;
   }
 
