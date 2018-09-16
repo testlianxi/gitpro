@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { DatePicker, List, Picker } from 'antd-mobile';
+import Select from 'react-select';
 import Title from '_c/topbar';
 import service from '_s/Index';
 import Pagination from '_c/pagination';
@@ -59,13 +60,8 @@ class SaleCount extends Component {
 
       sdate: new Date(),
       edate: new Date(),
-      selectedValue: [''],
-      selectData: [
-        {
-          value: '',
-          label: '全部'
-        }
-      ],
+      selectedOption: [],
+      selectData: [],
       query: {
         start: new Date().format('yyyy-MM-dd'),
         end: new Date().format('yyyy-MM-dd'),
@@ -123,15 +119,22 @@ class SaleCount extends Component {
   }
 
   toSearch = () => {
+    let devices = this.state.selectedOption;
+    devices = devices.length ? devices.map(item => item.value).join(',') : '';
     this.setState({
       offset: 1,
       totalPage: null,
       query: {
         start: new Date(this.state.sdate).format('yyyy-MM-dd'),
         end: new Date(this.state.edate).format('yyyy-MM-dd'),
-        devices: this.state.selectedValue[0] || '',
+        devices,
       }
     }, this.loadOrderList);
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
   }
 
   componentWillMount() {
@@ -156,8 +159,9 @@ class SaleCount extends Component {
   render() {
     const {
       size, offset, totalPage, edate,
-      sdate, selectData, selectedValue,
-      total, saleAccountList, query
+      sdate, selectData,
+      total, saleAccountList, query,
+      selectedOption = [],
     } = this.state;
 
     const now = new Date();
@@ -209,24 +213,21 @@ class SaleCount extends Component {
               </DatePicker>
             </div>
           </div>
-          <div>
+          <div className={styles.multi}>
             <span>设备：</span>
-            <div className={styles.datasecect}>
-              <Picker
-                data={selectData}
-                cols="1"
-                value={selectedValue}
-                cascade
-                onOk={v => {this.setState({selectedValue: v})}}
-              >
-                <List.Item onClick={() => {}}></List.Item>
-              </Picker>
+            <div>
+              <Select
+                isMulti
+                onChange={this.handleChange}
+                placeholder="默认全部"
+                options={selectData}
+              />
             </div>
           </div>
           <div className={styles.selected}>
             <span>已选：</span>
             <i>{sdate.format('yyyy-MM-dd') + ' 至 ' + edate.format('yyyy-MM-dd')}</i>
-            <i>{(selectData.find(item => item.value === selectedValue[0]) || {}).label}</i>
+            <i>{(selectedOption.length ? selectedOption : [{label: '全部'}]).map(item => item.label).join('，')}</i>
           </div>
           <a className={styles.seacrchbtn} onClick={this.toSearch} href="javascirpt:;">查询</a>
         </div>

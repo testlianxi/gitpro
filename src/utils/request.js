@@ -30,7 +30,7 @@ function getCookie(name) {
  * @return {object}           An object containing either "data" or "err"
  */
 var log = console.log;
-export default function request(url, options) {
+export default function request(url, options = {}) {
   if (!getCookie('user') && location.hash !== '#/login') {
     location.hash = '#/login'
   }
@@ -42,6 +42,11 @@ export default function request(url, options) {
     },
   };
   if (options.method.toLowerCase() === 'get') {
+    if (location.host === 'localhost') {
+      options.body = options.body || {};
+      options.body.user = 'autobox';
+      options.body._debug = true;
+    }
     if (options.body && Object.keys(options.body).length) {
       // 如果是IE就加上t，防止get服务缓存
       if (window.navigator.msSaveBlob) { options.body.t = parseInt(Math.random() * 1000000, 10); }
@@ -65,9 +70,14 @@ export default function request(url, options) {
     .then(data => {
       log(data)
       if (data.status !== '1') {
-        alert(error_msg);
+        alert(data.error_msg);
       }
       return { data }
     })
-    .catch(err => ({ err }));
+    .catch(err => {
+      if (err.error_msg) {
+        alert(err.error_msg);
+      }
+      return { err }
+    });
 }

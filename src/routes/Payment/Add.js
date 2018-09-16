@@ -52,12 +52,12 @@ class Payment extends Component {
         payee,
         wx_appid,
         wx_company_id: wx_mchid,
-        wx_api_key: wx_apikey,
+        wx_api_key: encodeURIComponent(wx_apikey),
         wx_ctr,
         zfb_appid,
         zfb_company_id: zfb_pid,
-        zfb_public_key,
-        zfb_private_key
+        zfb_public_key: encodeURIComponent(zfb_public_key),
+        zfb_private_key: encodeURIComponent(zfb_private_key)
       })
       .then(res => {
         if(res == 1){
@@ -70,12 +70,12 @@ class Payment extends Component {
         payee,
         wx_appid,
         wx_company_id: wx_mchid,
-        wx_api_key: wx_apikey,
+        wx_api_key: encodeURIComponent(wx_apikey),
         wx_ctr,
         zfb_appid,
         zfb_company_id: zfb_pid,
-        zfb_public_key,
-        zfb_private_key
+        zfb_public_key: encodeURIComponent(zfb_public_key),
+        zfb_private_key: encodeURIComponent(zfb_private_key)
       })
       .then(res =>{
         if(res == 1){
