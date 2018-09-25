@@ -15,7 +15,7 @@ const Item = (props) => {
         <span className={styles.daymoney}>¥{data.sale_amount}</span>
       </div>
       <div className={styles.deviceindex}>
-        NO:{data.machine_id}
+        <span style={data.is_online === 0 ? {color: '#ccc'} : {}}>NO:{data.machine_id}</span>
         {+data.goods_status === 1 && (<span className={styles.taglack}>缺货</span>)}
         {+data.sign_status === 1 && (<span className={styles.tagerr}>故障</span>)}
       </div>
