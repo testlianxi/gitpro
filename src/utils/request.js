@@ -44,8 +44,9 @@ export default function request(url, options = {}) {
   if (options.method.toLowerCase() === 'get') {
     if (location.host === 'localhost') {
       options.body = options.body || {};
-      options.body.user = 'autobox';
+      options.body.user = 'test';
       options.body._debug = true;
+      document.cookie = 'user=df4';
     }
     if (options.body && Object.keys(options.body).length) {
       // 如果是IE就加上t，防止get服务缓存

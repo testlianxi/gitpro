@@ -21,17 +21,10 @@ const LEVEL = [{
 }]
 
 const Item = (props) => {
-  const { data, active, select } = props;
+  const { data, select, index } = props;
 
-  let color;
-  let str;
-  if(!active){
-    color = '#108ee9'
-    str ='未选择'
-  }else{
-    color = '#d7d7d7'
-    str ='已选择'
-  }
+  let color = data.relate ? '#d7d7d7' : '#108ee9';
+  let str = data.relate ? '已选择' : '未选择';
 
   return (
     <li className={styles.item}>
@@ -49,7 +42,7 @@ const Item = (props) => {
         <div className={styles.deviceaddr}>{data.adr}</div>
 
         <div className={styles.selectBox}>
-          <p style={{ background : color}} onClick={select.bind(this,data.id)}>{str}</p>
+          <p style={{ background : color}} onClick={() => {select(index)}}>{str}</p>
         </div>
       </a>
     </li>
@@ -115,20 +108,22 @@ class Personnel extends Component {
     const { selector, user } = this.state;
 
     let { user_name, level } = user;
-    let device_list = selector;
-    let forbid_device_list = [];
-    companyDeviceList.forEach(item => {
-      if (!device_list.includes(item.id)) {
-        forbid_device_list.push(item.id);
-      }
-    });
+    
+    let changeId = {
+      device_list: [],
+      forbid_device_list: []
+    }
+    companyDeviceList.forEach(item => changeId[item.relate ? 'device_list' : 'forbid_device_list'].push(item.id));
+
+    let device_list = changeId.device_list.join(',');
+    let forbid_device_list = changeId.forbid_device_list.join(',');
 
     _createDeviceList({
       user_id,
       user_name,
       level,
       device_list,
-      forbid_device_list: forbid_device_list.join(',')
+      forbid_device_list
     }).then(res =>{
       if(res == 1){
         history.goBack()
@@ -171,15 +166,12 @@ class Personnel extends Component {
       });
   }
 
-  select = (id) =>{
-    let arr = JSON.parse(JSON.stringify(this.state.selector));
-    let index = arr.findIndex(item => item == id);
-    if(index == -1){
-      arr.push(id)
-    }else{
-      arr.splice(index,1)
-    }
-    this.setState({selector: arr})
+  select = (index) => {
+    let {companyDeviceList} = this.state;
+    let relate = companyDeviceList[index].relate;
+
+    companyDeviceList[index].relate = relate ? 0 : 1;
+    this.setState({companyDeviceList});
   }
 
   render() {
@@ -220,10 +212,8 @@ class Personnel extends Component {
               companyDeviceList.length
               &&
               companyDeviceList.map((item, i) => {
-                let id = item.id;
-                let active = selector.includes(id)
                 return (
-                  <Item key={i} data={item} active={active} select={this.select} />
+                  <Item key={item.id} data={item} index={i} select={this.select} />
                 )
               })
             }
