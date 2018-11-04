@@ -6,6 +6,8 @@ import service from '_s/device';
 import { HOST } from '_u/api';
 import { NavBar, Icon, Tabs, InputItem, List, Picker, Toast } from 'antd-mobile';
 import { _getPayList } from '_s/pay';
+import Pagination from '_c/pagination';
+import Search from '_c/search';
 import {
   _createDevice, _createItemAisleinfo,
   _editDevice, _addaislelist
@@ -97,6 +99,13 @@ class Equipment extends Component {
       soft_info: '请选择文件',
 
       level: localStorage.level,
+
+
+      totalPage: null,
+
+      offset: 1,
+      size: 10,
+      search: ''
     };
   }
 
@@ -120,15 +129,16 @@ class Equipment extends Component {
   }
 
   loadGoodList() {
-
+    const { size, offset, search } = this.state;
     _getGoodList({
-      size: 50,
-      offset: 0,
-      search: '',
+      size,
+      offset: (offset - 1) * size,
+      search
     })
     .then(res => {
       this.setState({
         goodList: res.result,
+        totalPage: res.total_page
       })
     });
   }
@@ -141,7 +151,7 @@ class Equipment extends Component {
     })
     .then(payList => {
       this.setState({
-        payList: payList.result.map(item => ({value: item.id, label: item.name})),
+        payList: payList.result ? payList.result.map(item => ({value: item.id, label: item.name})) : [],
       })
     });
   }
@@ -194,7 +204,7 @@ class Equipment extends Component {
   addAisle = () => {
     const { aisle_info_list, id } = this.state;
     aisle_info_list.push({
-      id: id,
+      did: id,
       goods_id: '',
       price: '',
       inventory: '',
@@ -429,7 +439,7 @@ class Equipment extends Component {
                   &&
                   operator.length
                   ?
-                  operator.map(item => (<span>{item}</span>)) : null
+                  operator.map((item, i) => (<span key={i}>{item}</span>)) : null
                 }
               </div>
             </div>
@@ -444,7 +454,7 @@ class Equipment extends Component {
           <div className={styles.tabitem}>
             <div className={styles.tools}>
               {+level !== 3 && <a href="javascript:;" onClick={this.addAisle}>新增货道</a>}
-              <a href="javascript:;" onClick={this.upDateAll}>一键更新</a>
+              <a style={{display: 'none'}} href="javascript:;" onClick={this.upDateAll}>一键更新</a>
             </div>
             <ul>
               {
@@ -479,8 +489,21 @@ class Equipment extends Component {
     });
   }
 
+  pageChange = (n) => {
+    this.setState({offset: n}, () => {
+      n && this.loadGoodList();
+    });
+  }
+
+  toSearch = (search) => {
+    this.setState({search, offset: 1}, this.loadGoodList);
+  }
+  
   render() {
-    const { device_type, android_type, control_type, operator_company, device_id } = this.state;
+    const { 
+      device_type, android_type, control_type, 
+      operator_company, device_id, offset, totalPage
+    } = this.state;
     const { 
       id, password, payList, company_id, address, device_name, service_tel,
       operator, yyryData, adv_info, soft_info,
@@ -495,6 +518,7 @@ class Equipment extends Component {
         { title: '货道信息' },
       ]
     }
+    // <ul style={{display: showGoods ? 'block' : 'none'}} className={styles.selectGoods}>
     return (
       <div className={styles.equadd}>
         <Title
@@ -508,8 +532,14 @@ class Equipment extends Component {
           {this.TabsChildren()}
         </Tabs>
         {
-          <ul style={{display: showGoods ? 'block' : 'none'}} className={styles.selectGoods}>
+          showGoods &&
+          <ul className={styles.selectGoods}>
             <li className={styles.goodstitle}>请选择要添加的商品</li>
+            <Search
+              placeholder="请输入搜索词"
+              searchText="搜索"
+              onSearch={this.toSearch}
+            />
             {
               goodList
               &&
@@ -520,6 +550,16 @@ class Equipment extends Component {
                   </Shoping>
                 )
               })
+            }
+            {
+
+              totalPage
+              &&
+              <Pagination
+                pageChange={this.pageChange}
+                maxPage={totalPage}
+                currentPage={offset}
+              />
             }
           </ul>
         }
